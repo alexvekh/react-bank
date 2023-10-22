@@ -1,18 +1,29 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const WelcomePage: React.FC = () => {
   return (
     <div className="welcome-page">
-      <h1>Welcome to Our Website</h1>
-      <img
-        src="https://example.com/your-image.jpg" // Replace with your image URL
-        alt="Welcome Image"
-        className="welcome-image"
-      />
-      <p>We are excited to have you here!</p>
-      <div className="button-container">
-        <button className="button-primary">Get Started</button>
-        <button className="button-secondary">Learn More</button>
+      {/* <img
+        src="./svg/status-bar-white.svg"
+        alt="Status bare"
+        className="status-bar"
+      /> */}
+
+      <div className="welcome">
+        <h1 className="welcome-title">Hello!</h1>
+        <p className="welcome-text">Welcome to bank app</p>
+      </div>
+
+      <div className="welcome-space"></div>
+
+      <div className="buttons">
+        <Link className="button button-primary" to="/signup">
+          Sign Up
+        </Link>
+        <Link className="button button-secondary" to="/signin">
+          Sign In
+        </Link>
       </div>
     </div>
   );
