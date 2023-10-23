@@ -4,19 +4,14 @@ import StatusBar from "../component/StatusBar";
 import ArrowBack from "../component/ArrowBack";
 import Alert from "../component/Alert";
 
-//На цій сторінці створюємо форму, яка відправляє запит на
-//реєстрацію користувача та переводить на сторінку
-//  /signup-comfirm Після реєстрації потрібно зберегти дані
-//  аутентифікації в контекст
-
-const SignupPage: React.FC = () => {
+const SigninPage: React.FC = () => {
   return (
     <div className="page">
       <StatusBar />
       <ArrowBack />
       <div className="page__info">
-        <h1 className="page__title">Sign up</h1>
-        <p className="page__text">Choose a registration method</p>
+        <h1 className="page__title">Sign in</h1>
+        <p className="page__text">Select login method</p>
       </div>
       <div className="inputs">
         {/* onSubmit={handleSubmit} */}
@@ -54,4 +49,4 @@ const SignupPage: React.FC = () => {
   );
 };
 
-export default SignupPage;
+export default SigninPage;

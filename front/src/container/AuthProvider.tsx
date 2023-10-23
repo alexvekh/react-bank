@@ -8,23 +8,22 @@ type UserType = {
   username: string;
   email: string;
 };
-console.log("c1");
+
 type AuthState = {
   isLogged: boolean;
   token: string | null;
   user: UserType | null;
 };
-console.log("c2");
+
 type AuthAction =
   | { type: "LOGIN"; token: string; user: UserType }
   | { type: "LOGOUT" };
-console.log("c3");
+
 const initialAuthState: AuthState = {
   isLogged: false,
   token: null,
   user: null,
 };
-console.log("c4", "initialAuthState: ", initialAuthState);
 
 // Редуктор для управління станом аутентифікації
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -37,9 +36,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return state;
   }
 };
-
-console.log("c5", "authReducer", authReducer);
-// =========================================
+//=====================================
 // Створюємо контекст аутентифікації
 export const AuthContext = createContext<
   | {
@@ -48,16 +45,19 @@ export const AuthContext = createContext<
     }
   | undefined
 >(undefined);
-console.log("c6", "AuthContext: ", AuthContext);
-
+console.log("p7");
 // Компонент-постачальник контексту
 type AuthProviderProps = {
   children: React.ReactNode; // Визначте властивість 'children' для типу
 };
+console.log("p8");
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
-  console.log("c7");
+  console.log("p9");
+  console.log("AuthProvider: ", AuthProvider);
+  console.log("state: ", state, "dispatch: ", dispatch);
+
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       {children}

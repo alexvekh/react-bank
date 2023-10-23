@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import { Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
-const AuthRoute = ({ ...props }) => {
+const PrivateRoute = ({ ...props }) => {
   const authContext = useContext(AuthContext);
 
   if (!authContext || !authContext.state) {
-    console.log("if", authContext);
     // Якщо контекст або стан відсутні, перенаправте на сторінку входу
     return <Navigate to="/login" />;
   }
@@ -18,4 +17,4 @@ const AuthRoute = ({ ...props }) => {
   );
 };
 
-export default AuthRoute;
+export default PrivateRoute;
