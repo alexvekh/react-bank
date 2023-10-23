@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//На цій сторінці ми створюємо верстку та розміщуємо дві
+//кнопки-посилання на сторінку /signup та сторінку /signin
 const WelcomePage: React.FC = () => {
   return (
     <div className="welcome-page">
@@ -8,7 +10,9 @@ const WelcomePage: React.FC = () => {
         src="./svg/status-bar-white.svg"
         alt="Status bare"
         className="status-bar"
-      /> */}
+      /> 
+      Зроблений в CSS
+      */}
 
       <div className="welcome">
         <h1 className="welcome-title">Hello!</h1>
@@ -19,7 +23,7 @@ const WelcomePage: React.FC = () => {
 
       <div className="buttons">
         <Link className="button button-primary" to="/signup">
-          Sign Up
+          Sign Up{" "}
         </Link>
         <Link className="button button-secondary" to="/signin">
           Sign In
