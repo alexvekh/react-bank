@@ -48,7 +48,7 @@ export const AuthContext = createContext<
 console.log("p7");
 // Компонент-постачальник контексту
 type AuthProviderProps = {
-  children: React.ReactNode; // Визначте властивість 'children' для типу
+  children: React.ReactNode;
 };
 console.log("p8");
 

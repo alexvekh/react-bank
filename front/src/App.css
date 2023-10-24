@@ -158,7 +158,10 @@ body {
   padding: 20px;
   gap: 20px;
 }
-
+.error {
+  padding: 20px;
+  margin: 20px;
+}
 
 
 .input__field {

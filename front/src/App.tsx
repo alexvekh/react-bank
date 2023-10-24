@@ -1,27 +1,34 @@
-import React from "react";
+import React, { useReducer } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WelcomePage from "./page/WelcomePage";
 import SignupPage from "./page/SignupPage";
 import AuthRoute from "./container/AuthRoute";
-//import { AuthContext } from "./container/AuthContext";
-import { AuthProvider } from "./container/AuthProvider";
+import PrivateRoute from "./container/PrivateRoute";
+import SigninPage from "./page/SigninPage";
+import {
+  AuthContext,
+  authReducer,
+  initialAuthState,
+} from "./container/AuthContext";
+//import { AuthProvider } from "./container/AuthProvider";
 
 const SignupConfirmPage: React.FC = () => {
+  // На цій сторінці вводимо код підтвердження реєстрації акаунта
+  //та після успішного запиту переводимо на сторінку /balance
+  //Перевіряємо в контексті аутентифікації чи user.confirm. Якщо
+  //так, то переводимо на сторінку /balance
   return (
     <div>
       <h1>SignupConfirmPage</h1>
     </div>
   );
 };
-const SigninPage: React.FC = () => {
-  return (
-    <div>
-      <h1>SigninPage</h1>
-    </div>
-  );
-};
+
 const RecoveryPage: React.FC = () => {
+  //Сторінка відновлення акаунту. Після вводу пошти, створюється
+  //код з підтвердженням відновлення акаунту, переводимо на
+  //сторінку /recovery-confirm
   return (
     <div>
       <h1>RecoveryPage</h1>
@@ -29,6 +36,8 @@ const RecoveryPage: React.FC = () => {
   );
 };
 const RecoveryConfirmPage: React.FC = () => {
+  //Сторінка підтвердження відновлення та оновлення пароля. Після
+  //відправки форми потрібно перевести на сторінку /balance
   return (
     <div>
       <h1>RecoveryConfirmPage</h1>
@@ -43,6 +52,9 @@ const BalancePage: React.FC = () => {
   );
 };
 const NotificationsPage: React.FC = () => {
+  // Сторінка списку нотифікацій, який створюються при діях: Вхід
+  //в акаунт Відновлення акаунту Зміна пароля Зміна пошти
+  // Поповнення Переказ
   return (
     <div>
       <h1>NotificationsPage</h1>
@@ -50,6 +62,9 @@ const NotificationsPage: React.FC = () => {
   );
 };
 const SettingsPage: React.FC = () => {
+  //Сторінка налаштувань, на якій можна: Змінити пароль Змінити
+  //пошту Вийти з акаунту Кожна дія повинна в кінці оновлювати
+  //контекст аутентифікації
   return (
     <div>
       <h1>SettingsPage</h1>
@@ -58,6 +73,9 @@ const SettingsPage: React.FC = () => {
 };
 
 const RecivePage: React.FC = () => {
+  //Сторінка поповнення балансу. Користувач вводить суму, натискає
+  //на платіжний метод і відправляється запит. Після чого
+  //створюється нова транзакція та нова нотифікація
   return (
     <div>
       <h1>RecivePage</h1>
@@ -65,6 +83,8 @@ const RecivePage: React.FC = () => {
   );
 };
 const SendPage: React.FC = () => {
+  //
+  // {/* /Користувач вводить пошту та суму. Після чого у користувача, який відправив суму, створюється транзакція на списання грошей на нотифікацію, а у користувача, який отримав гроші, створюється транзакція на отримання грошей та нотифікацію */}
   return (
     <div>
       <h1>SendPage</h1>
@@ -84,16 +104,21 @@ const Error: React.FC = () => {
 };
 
 function App() {
-  const authContextData = {
-    isLogged: true, // Ваш статус аутентифікації
-    token: "your_token_here", // Токен користувача
-    login: (status: boolean) => {
-      // Реалізуйте вашу функцію входу тут
-    },
-  };
+  const [state, dispatch] = useReducer(authReducer, initialAuthState);
+  console.log("App: state, dispatch : ", state, dispatch);
+  // dispatch({
+  //   type: "LOGIN",
+  //   token: "your-token",
+  //   user: { username: "John", email: "john@email.com" },
+  // });
+  // state.isLogged = true;
+  // state.token = "222";
+  // Сохранение токена: localStorage.setItem('token', 'ваш_токен');
+  // Получение токена: const token = localStorage.getItem('token');
+
+  console.log("App:state, dispatch entered: ", state, dispatch);
   return (
-    //<AuthContext.Provider value={authContextData}>
-    <AuthProvider>
+    <AuthContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <Routes>
           <Route
@@ -115,17 +140,13 @@ function App() {
           <Route
             path="/signup-confirm"
             element={
-              //<PrivateRoute>
-              //На сторінці /signup-confirm використовуємо PrivateRoute, адже
-              //підтвердити акаунт може користувач, який вже увійшов в
-              //акаунтПісля підтвердження акаунту потрібно оновити дані
-              //аутентифікації в контексті
-              <SignupConfirmPage />
-              // На цій сторінці вводимо код підтвердження реєстрації акаунта
-              //та після успішного запиту переводимо на сторінку /balance
-              //Перевіряємо в контексті аутентифікації чи user.confirm. Якщо
-              //так, то переводимо на сторінку /balance
-              //</PrivateRoute>
+              <PrivateRoute>
+                //На сторінці /signup-confirm використовуємо PrivateRoute, адже
+                //підтвердити акаунт може користувач, який вже увійшов в
+                //акаунтПісля підтвердження акаунту потрібно оновити дані
+                //аутентифікації в контексті
+                <SignupConfirmPage />
+              </PrivateRoute>
             }
           />
           <Route
@@ -133,8 +154,6 @@ function App() {
             element={
               <AuthRoute>
                 <SigninPage />
-                //Вхід в акаунт. Зберігаємо дані аутентифікації в контекст. Якщо
-                //user.confirm є false, то перенаправляємо на /signup-confirm
               </AuthRoute>
             }
           />
@@ -143,9 +162,6 @@ function App() {
             element={
               <AuthRoute>
                 <RecoveryPage />
-                //Сторінка відновлення акаунту. Після вводу пошти, створюється
-                //код з підтвердженням відновлення акаунту, переводимо на
-                сторінку /recovery-confirm
               </AuthRoute>
             }
           />
@@ -154,62 +170,47 @@ function App() {
             element={
               <AuthRoute>
                 <RecoveryConfirmPage />
-                //Сторінка підтвердження відновлення та оновлення пароля. Після
-                //відправки форми потрібно перевести на сторінку /balance
               </AuthRoute>
             }
           />
           <Route
             path="/balance"
             element={
-              //<PrivateRoute>
-
-              <BalancePage />
-              // Сторінка балансу
-              //</PrivateRoute>
+              <PrivateRoute>
+                <BalancePage />
+              </PrivateRoute>
             }
           />
           <Route
             path="/notifications"
             element={
-              //<PrivateRoute>
-              <NotificationsPage />
-              // Сторінка списку нотифікацій, який створюються при діях: Вхід
-              //в акаунт Відновлення акаунту Зміна пароля Зміна пошти
-              // Поповнення Переказ
-              //</Routes></PrivateRoute>
+              <PrivateRoute>
+                <NotificationsPage />
+              </PrivateRoute>
             }
           />
           <Route
             path="/settings"
             element={
-              //<PrivateRoute>
-              <SettingsPage />
-              //Сторінка налаштувань, на якій можна: Змінити пароль Змінити
-              //пошту Вийти з акаунту Кожна дія повинна в кінці оновлювати
-              //контекст аутентифікації
-              //</PrivateRoute>
+              <PrivateRoute>
+                <SettingsPage />
+              </PrivateRoute>
             }
           />
           <Route
             path="/recive"
             element={
-              //<PrivateRoute>
-              <RecivePage />
-              //Сторінка поповнення балансу. Користувач вводить суму, натискає
-              //на платіжний метод і відправляється запит. Після чого
-              //створюється нова транзакція та нова нотифікація
-              //</PrivateRoute>
+              <PrivateRoute>
+                <RecivePage />
+              </PrivateRoute>
             }
           />
           <Route
             path="/send"
             element={
-              //<PrivateRoute>
-              <SendPage />
-              //
-              // {/* /Користувач вводить пошту та суму. Після чого у користувача, який відправив суму, створюється транзакція на списання грошей на нотифікацію, а у користувача, який отримав гроші, створюється транзакція на отримання грошей та нотифікацію */}
-              //</PrivateRoute>
+              <PrivateRoute>
+                <SendPage />
+              </PrivateRoute>
             }
           />
           <Route
@@ -229,8 +230,7 @@ function App() {
           <Route path="*" Component={Error} />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
-    //</AuthContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
