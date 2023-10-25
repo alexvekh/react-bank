@@ -2,20 +2,30 @@ import React, { useContext } from "react";
 import { Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
-const AuthRoute = ({ ...props }) => {
+//AuthRoute це компонент, який перевіряє, чи є в контексті аутентифікації токен,
+//якщо так, то переводить на сторінку /balance
+const AuthRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const authContext = useContext(AuthContext);
+  console.log("AuthRoute: authContext", authContext);
 
-  if (!authContext || !authContext.state) {
-    console.log("if", authContext);
-    // Якщо контекст або стан відсутні, перенаправте на сторінку входу
-    return <Navigate to="/login" />;
+  // Перевіряємо, чи контекст ініціалізований
+  if (!authContext) {
+    // Якщо контекст не ініціалізований, виконуємо відповідну логіку
+    return <Navigate to="/error" />;
   }
 
-  return authContext.state.isLogged ? (
-    <Route {...props} />
-  ) : (
-    <Navigate to="/login" />
-  );
+  // Якщо контекст ініціалізований, отримуємо state
+  const { state } = authContext;
+  console.log("AuthRoute: state", state);
+
+  // Перевіряємо, чи є токен
+  if (state.token) {
+    // Якщо немає токена, переадресовуємо на сторінку входу
+    return <Navigate to="/balance" />;
+  }
+
+  // Якщо є токену нема, дозволяємо доступ до сторінок з регістрацією
+  return <>{children}</>;
 };
 
 export default AuthRoute;

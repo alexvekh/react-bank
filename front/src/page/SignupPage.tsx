@@ -1,36 +1,76 @@
-import React, { useId } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import StatusBar from "../component/StatusBar";
 import ArrowBack from "../component/ArrowBack";
 import Alert from "../component/Alert";
-
-//На цій сторінці створюємо форму, яка відправляє запит на
-//реєстрацію користувача та переводить на сторінку
-//  /signup-comfirm Після реєстрації потрібно зберегти дані
-//  аутентифікації в контекст
+import Page from "../component/Page";
+import Title from "../component/Title";
 
 const SignupPage: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("SignUpPage 1: ", email, password, navigate);
+
+    try {
+      const response = await fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log(
+        "SignUpPage 2: response",
+        response,
+        email,
+        password,
+        navigate
+      );
+      if (response.ok) {
+        // Registration successful, you can navigate to the next page
+        navigate("/signup-confirm");
+      } else {
+        // Handle registration errors
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
   return (
-    <div className="page">
+    <Page>
       <StatusBar />
       <ArrowBack />
-      <div className="page__info">
-        <h1 className="page__title">Sign up</h1>
-        <p className="page__text">Choose a registration method</p>
-      </div>
+      <Title title="Sign up" description="Choose a registration method" />
       <div className="inputs">
-        {/* onSubmit={handleSubmit} */}
-        <form className="form" method="post">
+        <form className="form" onSubmit={handleSubmit}>
           <div className="input">
             <label>
               Email: <br />
-              <input className="input__field" name="email" />
+              <input
+                className="input__field"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </label>
           </div>
           <div className="input">
             <label>
               Password: <br />
-              <input className="input__field" name="password" />
+              <input
+                className="input__field"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </label>
           </div>
           <div className="notice">
@@ -39,18 +79,13 @@ const SignupPage: React.FC = () => {
               Sign In
             </Link>
           </div>
-          <button className="button button-primary">Continue</button>
+          <button className="button button-primary" type="submit">
+            Continue
+          </button>
           <Alert />
         </form>
       </div>
-
-      {/* <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
-      </div> */}
-
-      <Link to="/signup"></Link>
-    </div>
+    </Page>
   );
 };
 
