@@ -1,26 +1,36 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import StatusBar from "../component/StatusBar";
 import ArrowBack from "../component/ArrowBack";
 import Alert from "../component/Alert";
+import Page from "../component/Page";
+import Title from "../component/Title";
 
 const SignupPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("SignUpPage 1: ", email, password, navigate);
 
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
-
+      console.log(
+        "SignUpPage 2: response",
+        response,
+        email,
+        password,
+        navigate
+      );
       if (response.ok) {
         // Registration successful, you can navigate to the next page
         navigate("/signup-confirm");
@@ -34,13 +44,10 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="page">
+    <Page>
       <StatusBar />
       <ArrowBack />
-      <div className="page__info">
-        <h1 className="page__title">Sign up</h1>
-        <p className="page__text">Choose a registration method</p>
-      </div>
+      <Title title="Sign up" description="Choose a registration method" />
       <div className="inputs">
         <form className="form" onSubmit={handleSubmit}>
           <div className="input">
@@ -78,7 +85,7 @@ const SignupPage: React.FC = () => {
           <Alert />
         </form>
       </div>
-    </div>
+    </Page>
   );
 };
 

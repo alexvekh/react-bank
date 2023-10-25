@@ -141,10 +141,10 @@ function App() {
             path="/signup-confirm"
             element={
               <PrivateRoute>
-                //На сторінці /signup-confirm використовуємо PrivateRoute, адже
+                {/* //На сторінці /signup-confirm використовуємо PrivateRoute, адже
                 //підтвердити акаунт може користувач, який вже увійшов в
                 //акаунтПісля підтвердження акаунту потрібно оновити дані
-                //аутентифікації в контексті
+                //аутентифікації в контексті */}
                 <SignupConfirmPage />
               </PrivateRoute>
             }

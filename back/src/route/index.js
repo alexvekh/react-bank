@@ -14,5 +14,10 @@ router.get('/', (req, res) => {
   res.status(200).json('Hello World')
 })
 
+app.post('/signup', (req, res) => {
+  console.log(req.body)
+  // Handle the registration logic here
+})
+
 // Експортуємо глобальний роутер
 module.exports = router
