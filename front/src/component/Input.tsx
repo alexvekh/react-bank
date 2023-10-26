@@ -1,11 +1,42 @@
-import React from "react";
+import { type } from "os";
+import React, { ChangeEvent } from "react";
 
-const ArrowBack: React.FC = () => {
+type InputProps = {
+  label: string;
+  labelClassName: string;
+  borderClassName: string;
+  name: string;
+  type: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Input: React.FC<InputProps> = ({
+  label,
+  labelClassName,
+  borderClassName,
+  name,
+  type,
+  value,
+  onChange,
+  onBlur,
+}) => {
   return (
-    <div className="arrow">
-      <img src="./svg/back.svg" alt="Status bare" className="arrow-back" />
+    <div className={labelClassName}>
+      <label>
+        {label}: <br />
+        <input
+          className={borderClassName}
+          name={name}
+          type={type}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+      </label>
     </div>
   );
 };
 
-export default ArrowBack;
+export default Input;

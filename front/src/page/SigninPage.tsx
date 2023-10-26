@@ -37,7 +37,7 @@ const SigninPage: React.FC = () => {
             </Link>
           </div>
           <button className="button button-primary">Continue</button>
-          <Alert />
+          <Alert color="red" />
         </form>
       </div>
 

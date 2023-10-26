@@ -45,7 +45,7 @@ const SignupPage: React.FC = () => {
             </Link>
           </div>
           <button className="button button-primary">Continue</button>
-          <Alert />
+          <Alert color={"red"} />
           {/* A user with the same name is already exist */}
         </form>
       </div>
