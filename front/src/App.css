@@ -169,6 +169,19 @@ body {
   margin: 20px;
 }
 
+.input {
+  color: black;
+  position: relative;
+}
+
+/* .input::after {
+  content: "First ::after";
+  position: absolute;
+  bottom: 50%;
+  right: 10px;
+  color: red;
+} */
+
 
 .input__field {
   display: flex;
@@ -180,8 +193,27 @@ body {
   margin-top: 8px;
 
   border-radius: 12px;
-  border: 1px solid var(--Purple-main, #775CE5);
+  border: 1px solid var(--Purple-main,#775CE5);
 }
+
+.input__field:focus {
+  border: 2px solid var(--Purple-main, #775CE5);
+}
+
+.input__field--error {
+  display: flex;
+  padding: 20px 16px;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  width: 353px;
+  margin-top: 8px;
+
+  border-radius: 12px;
+  border: 2px solid var(--Red, red);
+}
+
+
 .notice {
   color: var(--Black, #1D1D1F);
 font-family: Jost;
