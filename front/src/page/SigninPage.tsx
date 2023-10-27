@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import StatusBar from "../component/StatusBar";
 import ArrowBack from "../component/ArrowBack";
@@ -37,7 +37,6 @@ const SigninPage: React.FC = () => {
             </Link>
           </div>
           <button className="button button-primary">Continue</button>
-          <Alert color="red" />
         </form>
       </div>
 

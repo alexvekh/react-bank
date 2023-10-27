@@ -171,16 +171,12 @@ body {
 
 .input {
   color: black;
-  position: relative;
 }
 
-/* .input::after {
-  content: "First ::after";
-  position: absolute;
-  bottom: 50%;
-  right: 10px;
+.input--error {
   color: red;
-} */
+}
+
 
 
 .input__field {
@@ -191,7 +187,7 @@ body {
   align-self: stretch;
   width: 353px;
   margin-top: 8px;
-
+  color: black;
   border-radius: 12px;
   border: 1px solid var(--Purple-main,#775CE5);
 }
@@ -208,10 +204,12 @@ body {
   align-self: stretch;
   width: 353px;
   margin-top: 8px;
+  color: red;
 
   border-radius: 12px;
-  border: 2px solid var(--Red, red);
+  border: 1px solid var(--Red, red);
 }
+
 
 
 .notice {

@@ -9,7 +9,7 @@ type InputProps = {
   type: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: ChangeEvent<HTMLInputElement>) => void;
+  notice?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
   type,
   value,
   onChange,
-  onBlur,
+  notice,
 }) => {
   return (
     <div className={labelClassName}>
@@ -32,8 +32,8 @@ const Input: React.FC<InputProps> = ({
           type={type}
           value={value}
           onChange={onChange}
-          onBlur={onBlur}
         />
+        {notice}
       </label>
     </div>
   );
