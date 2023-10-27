@@ -1,18 +1,16 @@
 import React from "react";
 
 type AlertProps = {
+  text: string;
   color: string;
+  src: string;
 };
 
-const Alert: React.FC<AlertProps> = ({ color }) => {
+const Alert: React.FC<AlertProps> = ({ src, text, color }) => {
   return (
     <div className="alert" style={{ color }}>
-      <img
-        src="./svg/alert-yellow.svg"
-        alt="Status bare"
-        className="arrow-back"
-      />
-      A user with the same name is already exist
+      <img src={src} alt="Status bare" />
+      {text}
     </div>
   );
 };

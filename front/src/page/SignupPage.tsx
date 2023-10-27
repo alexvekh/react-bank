@@ -10,8 +10,9 @@ import Input from "../component/Input";
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isEmailValid, setEmailIsValid] = useState(false);
-  const [isPassworValid, setPasswordIsValid] = useState(false);
+  const [isEmailValid, setEmailIsValid] = useState(true);
+  const [isPasswordValid, setPasswordIsValid] = useState(true);
+  const [alert, setAlert] = useState<string>("");
 
   const validateEmail = (email: string): boolean => {
     const emailRegex: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -24,16 +25,6 @@ const SignupPage: React.FC = () => {
     setEmailIsValid(validateEmail(newEmail));
   };
 
-  const handleEmailBlur = () => {
-    setEmailIsValid(validateEmail(email));
-  };
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newPassword: string = e.target.value;
-    setPassword(newPassword);
-    //setPasswordIsValid(validatePassword(newPassword));
-  };
-
   const validatePassword = (password: string) => {
     // Define your password validation criteria here
     const minLength = 8;
@@ -43,40 +34,55 @@ const SignupPage: React.FC = () => {
     return password.length >= minLength && hasUppercase && hasSpecialChar;
   };
 
-  const handlePasswordBlur = () => {
-    setPasswordIsValid(validatePassword(password));
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const newPassword: string = e.target.value;
+    setPassword(newPassword);
+    setPasswordIsValid(validatePassword(newPassword));
   };
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("SignUpPage 1: ", email, password, navigate);
+    setEmailIsValid(validateEmail(email));
+    setPasswordIsValid(validatePassword(password));
 
-    try {
-      const response = await fetch("http://localhost:4000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      console.log(
-        "SignUpPage 2: response",
-        response,
-        email,
-        password,
-        navigate
-      );
-      if (response.ok) {
-        // Registration successful, you can navigate to the next page
-        navigate("/signup-confirm");
-      } else {
-        // Handle registration errors
-        console.error("Registration failed");
+    if (!email && !password) {
+      setAlert("Enter email and password!");
+    } else if (!email) {
+      setAlert("Enter email!");
+    } else if (!password) {
+      setAlert("Enter password!");
+    } else if (!isEmailValid) {
+      setAlert("Enter e valid email!");
+    } else if (!isPasswordValid) {
+      setAlert("Enter e valid password!");
+    } else {
+      try {
+        const response = await fetch("http://localhost:4000/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        console.log(
+          "SignUpPage 2: response",
+          response,
+          email,
+          password,
+          navigate
+        );
+        if (response.ok) {
+          // Registration successful, you can navigate to the next page
+          navigate("/signup-confirm");
+        } else {
+          // Handle registration errors
+          console.error("Registration failed");
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
-    } catch (error) {
-      console.error("An error occurred:", error);
     }
   };
 
@@ -87,32 +93,8 @@ const SignupPage: React.FC = () => {
       <Title title="Sign up" description="Choose a registration method" />
       <div className="inputs">
         <form className="form" onSubmit={handleSubmit}>
-          {/* <div className="input">
-            <label>
-              Email: <br />
-              <input
-                className="input__field"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </label>
-          </div>
-          <div className="input">
-            <label>
-              Password: <br />
-              <input
-                className="input__field"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
-          </div> */}
           <Input
             label="Email"
-            // {isEmailValid ? "Email: (✅valid)" : "Email: (❌ not valid)"}
             labelClassName={isEmailValid ? "input" : "input--error"}
             borderClassName={
               isEmailValid ? "input__field" : "input__field--error"
@@ -121,19 +103,23 @@ const SignupPage: React.FC = () => {
             type="text"
             value={email}
             onChange={handleEmailChange}
-            onBlur={handleEmailBlur}
+            notice={isEmailValid ? "" : "Email is not valid"}
           />
           <Input
             label="Password"
-            labelClassName="input"
+            labelClassName={isPasswordValid ? "input" : "input--error"}
             borderClassName={
-              isPassworValid ? "input__field" : "input__field--error"
+              isPasswordValid ? "input__field" : "input__field--error"
             }
             name={"password"}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onBlur={handlePasswordBlur}
+            notice={
+              isPasswordValid
+                ? ""
+                : "Minimum 8 symbols, 1 upperCase and 1 special"
+            }
           />
 
           <div className="notice">
@@ -145,7 +131,9 @@ const SignupPage: React.FC = () => {
           <button className="button button-primary" type="submit">
             Continue
           </button>
-          <Alert color="red" />
+          {alert ? (
+            <Alert src="../svg/alert-yellow.svg" color="orange" text={alert} />
+          ) : null}
         </form>
       </div>
     </Page>
