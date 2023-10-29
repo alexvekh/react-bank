@@ -1,4 +1,6 @@
 class User {
+  static users = []
+
   constructor(email, password) {
     this.id = User.users.length + 1
     this.email = email
@@ -26,21 +28,16 @@ class User {
   static getUserByEmail(email) {
     return User.users.find((user) => user.email === email)
   }
+  static existingUser = (email) =>
+    User.getUserByEmail(email)
 }
 
-// Initialize the users array
-User.users = []
-
-// Create a new user
 const newUser = new User('email@example.com', 'password123')
-
-// Retrieve all users
 const allUsers = User.users
-
-// Retrieve a user by email
 const existingUser = (email) => User.getUserByEmail(email)
-
 console.log('New User:', newUser)
 console.log('All Users:', allUsers)
 console.log('Existing User:', existingUser)
-console.log(existingUser('email@example.com'))
+console.log('ee', existingUser('email@example.com'))
+
+module.exports = User

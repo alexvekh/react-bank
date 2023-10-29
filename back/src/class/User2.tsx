@@ -10,12 +10,12 @@ class User {
     this.id = User.users.length + 1
     this.email = email
     this.password = password
-    this.token = this.generateRandomToken(12)
+    this.token = User.generateRandomToken(12)
 
     User.users.push(this) // Add the new user to the users array
   }
 
-  generateRandomToken(length: number): string {
+  static generateRandomToken(length: number): string {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'
     let token = ''
@@ -30,7 +30,7 @@ class User {
     return token
   }
 
-  getUserByEmail(email: string): User | undefined {
+  static getUserByEmail(email: string): User | undefined {
     return User.users.find((user) => user.email === email)
   }
 
@@ -39,3 +39,5 @@ class User {
 
 const newUser = new User('email@dot.com', 'ssdd22@@')
 console.log(newUser, User.getUsers)
+
+export default User
