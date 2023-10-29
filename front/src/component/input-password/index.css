@@ -1,0 +1,108 @@
+.input {
+  color: black;
+}
+
+.input--error {
+  color: red;
+}
+
+.field__wrapper {
+  position: relative;
+}
+
+
+
+.input__field {
+  display: flex;
+  padding: 20px 40px 20px 16px;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  width: 353px;
+  margin-top: 8px;
+  border-radius: 12px;
+  color: black;
+  border: 1px solid var(--Purple-main,#775CE5);
+}
+
+.input__field--error {
+  display: flex;
+  padding: 20px 40px 20px 16px;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  width: 353px;
+  margin-top: 8px;
+  border-radius: 12px;
+  color: red;
+  border: 1px solid var(--Red, red);
+}
+
+
+.field__icon {
+  display: block;
+  height: 18px;
+  width: 24px;
+
+  position: absolute;
+  right: 20px;
+  top:calc(50% + 2px);
+
+  cursor: pointer;
+}
+
+.field__icon--hide {
+  display: block;
+  height: 17px;
+  width: 24px;
+  position: absolute;
+  right: 25px;
+  top:calc(50% - 8px);
+  cursor: pointer;
+
+  background-image: url('../../../public/svg/password-show.svg');
+  background-size: cover;
+}
+
+
+
+.field__icon--show {
+  display: block;
+  height: 19px;
+  width: 23px;
+  position: absolute;
+  right: 25px;
+  top:calc(50% - 8px);
+  cursor: pointer;
+
+  background-image: url('../../../public/svg/password-hide.svg');
+  background-size: cover;
+}
+
+.field__icon--hide--error {
+  display: block;
+  height: 17px;
+  width: 24px;
+  position: absolute;
+  right: 25px;
+  top:calc(50% - 8px);
+  cursor: pointer;
+
+  background-image: url('../../../public/svg/password-show-red.svg');
+  background-size: cover;
+}
+
+.field__icon--show--error {
+  display: block;
+  height: 19px;
+  width: 23px;
+  position: absolute;
+  right: 25px;
+  top:calc(50% - 8px);
+  cursor: pointer;
+
+  background-image: url('../../../public/svg/password-hide-red.svg');
+  background-size: cover;
+}
+
+

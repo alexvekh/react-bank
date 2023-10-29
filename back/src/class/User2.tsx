@@ -15,7 +15,7 @@ class User {
     User.users.push(this) // Add the new user to the users array
   }
 
-  private generateRandomToken(length: number): string {
+  generateRandomToken(length: number): string {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'
     let token = ''
@@ -30,7 +30,7 @@ class User {
     return token
   }
 
-  static getUserByEmail(email: string): User | undefined {
+  getUserByEmail(email: string): User | undefined {
     return User.users.find((user) => user.email === email)
   }
 
