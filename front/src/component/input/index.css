@@ -1,0 +1,33 @@
+.input {
+  color: black;
+}
+
+.input--error {
+  color: red;
+}
+
+
+
+.input__field {
+  display: flex;
+  padding: 20px 16px;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  width: 353px;
+  margin-top: 8px;
+  color: black;
+  border-radius: 12px;
+  border: 1px solid var(--Purple-main,#775CE5);
+}
+
+&:focus {
+  border: 2px solid var(--Purple-main, #775CE5);
+}
+
+&--error {
+  color: red;
+  border: 1px solid var(--Red, red);
+}
+
+

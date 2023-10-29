@@ -38,10 +38,9 @@ const newUser = new User('email@example.com', 'password123')
 const allUsers = User.users
 
 // Retrieve a user by email
-const existingUser = User.getUserByEmail(
-  'email@example.com',
-)
+const existingUser = (email) => User.getUserByEmail(email)
 
 console.log('New User:', newUser)
 console.log('All Users:', allUsers)
 console.log('Existing User:', existingUser)
+console.log(existingUser('email@example.com'))

@@ -1,0 +1,33 @@
+.button {
+  text-align: center;
+  font-family: Jost;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 16px */
+  display: flex;
+  padding: 20px 140px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  text-decoration: none;
+  width: 353px;
+  transition: opacity 0.7;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.7;
+}
+
+.button-primary {
+  color: #FFF;
+  background: var(--Purple-main, #775CE5);
+}
+
+.button-secondary {
+  color: var(--Purple-main, #775CE5);
+  border: 1px solid var(--Purple-main, #775CE5);
+} 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import StatusBar from "../component/StatusBar";
+import StatusBar from "../component/status-bar/index";
 import ArrowBack from "../component/ArrowBack";
 import Alert from "../component/Alert";
 
@@ -9,7 +9,7 @@ import Alert from "../component/Alert";
 const SigninPage: React.FC = () => {
   return (
     <div className="page">
-      <StatusBar />
+      <StatusBar color="black" />
       <ArrowBack />
       <div className="page__info">
         <h1 className="page__title">Sign in</h1>

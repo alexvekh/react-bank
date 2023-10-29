@@ -1,11 +1,12 @@
 import React, { useState, ChangeEvent } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import StatusBar from "../component/StatusBar";
-import ArrowBack from "../component/ArrowBack";
-import Alert from "../component/Alert";
-import Page from "../component/Page";
-import Title from "../component/Title";
-import Input from "../component/Input";
+import StatusBar from "../component/status-bar/index";
+import ArrowBack from "../component/arrow-back/index";
+import Alert from "../component/alert/index";
+import Page from "../component/page/index";
+import Title from "../component/title/index";
+import Input from "../component/input/index";
+import InputPassword from "../component/input-password/index";
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -88,7 +89,7 @@ const SignupPage: React.FC = () => {
 
   return (
     <Page>
-      <StatusBar />
+      <StatusBar color="black" />
       <ArrowBack />
       <Title title="Sign up" description="Choose a registration method" />
       <div className="inputs">
@@ -105,7 +106,7 @@ const SignupPage: React.FC = () => {
             onChange={handleEmailChange}
             notice={isEmailValid ? "" : "Email is not valid"}
           />
-          <Input
+          <InputPassword
             label="Password"
             labelClassName={isPasswordValid ? "input" : "input--error"}
             borderClassName={
@@ -114,7 +115,7 @@ const SignupPage: React.FC = () => {
             name={"password"}
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             notice={
               isPasswordValid
                 ? ""
@@ -131,9 +132,7 @@ const SignupPage: React.FC = () => {
           <button className="button button-primary" type="submit">
             Continue
           </button>
-          {alert ? (
-            <Alert src="../svg/alert-yellow.svg" color="orange" text={alert} />
-          ) : null}
+          {alert ? <Alert status="yellow" text={alert} /> : null}
         </form>
       </div>
     </Page>

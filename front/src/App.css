@@ -50,7 +50,6 @@ body {
   height: 600px;
 }
 /*  */
-
 .page {
   display: flex;
   flex-direction: column;
@@ -64,7 +63,6 @@ body {
 }
 .arrow-back {
   margin-right: 0;
-  
 }
 
 .page__info {

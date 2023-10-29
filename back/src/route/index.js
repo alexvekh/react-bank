@@ -24,26 +24,33 @@ router.post('/signup', (req, res) => {
 
   if (!email || !password) {
     // Check if email or password are missing
+    console.log('3 pass: !email || !password')
     return res
       .status(400)
       .json({ error: 'Email and password are required' })
-  }
-  console.log('3 pass')
-
-  if (User.getUserByEmail(email)) {
-    // Check if a user with the same email already exists
-    console.log('4 pass')
-    return res.status(409).json({
-      error: 'A user with the same email already exists',
-    })
   } else {
-    const user = new User(email, password)
-    User.users.push(user)
-    console.log(allUsers)
+    console.log('3 pass: email and Password OK ')
+    console.log('Existing User from index:', existingUser)
 
-    res
-      .status(201)
-      .json({ message: 'User registered successfully' })
+    if (User.getUserByEmail(email)) {
+      // Check if a user with the same email already exists
+      console.log('4 pass: user exist')
+      return res.status(409).json({
+        error: 'A user with the same email already exists',
+      })
+    } else {
+      console.log('5 pass: user no exist')
+      const user = new User(email, password)
+      console.log('Created new user', user)
+      User.users.push(user)
+      console.log('allUsers', allUsers)
+      console.log('User.users', User.users)
+
+      res.status(201).json({
+        message: 'User registered successfully',
+        token: user.token,
+      })
+    }
   }
 })
 
