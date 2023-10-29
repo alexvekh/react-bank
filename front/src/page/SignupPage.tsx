@@ -67,15 +67,17 @@ const SignupPage: React.FC = () => {
           },
           body: JSON.stringify({ email, password }),
         });
-        console.log(
-          "SignUpPage 2: response",
-          response,
-          email,
-          password,
-          navigate
-        );
         if (response.ok) {
           // Registration successful, you can navigate to the next page
+          const responseData = await response.json(); // Parse the JSON response
+          console.log("Response Data:", responseData);
+
+          const token = responseData.token;
+          console.log("Token:", token);
+
+          localStorage.setItem("email", email);
+          localStorage.setItem("token", token);
+
           navigate("/signup-confirm");
         } else {
           // Handle registration errors
