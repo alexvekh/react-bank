@@ -4,26 +4,33 @@ import React, { createContext, useReducer, Dispatch } from "react";
 //В контексті буде знаходитись: створений state через useReducer, який буде
 //знаходитись властивість token та об'єкт user dispatch функція, яка
 //буде мати наступні типи дій: увійти в акаунт, вийти з акаунту
-type User = {
-  username: string;
-  email: string;
-};
 
 type AuthState = {
   isLogged: boolean;
+  isConfirmed: boolean;
   token: string | null;
-  user: User | null;
+  email: string | null;
 };
 
 type AuthAction =
-  | { type: "LOGIN"; token: string; user: User }
+  | { type: "LOGIN"; isConfirmed: boolean; token: string; email: string }
   | { type: "LOGOUT" };
 
+// export const initialAuthState: AuthState = {
+//   isLogged: false,
+//   isConfirmed: false,
+//   token: null,
+//   email: null,
+// };
+
+// Get from local storage
 export const initialAuthState: AuthState = {
-  isLogged: false,
-  token: null,
-  user: null,
+  isLogged: localStorage.getItem("user.isLogged") === "true" || false,
+  isConfirmed: localStorage.getItem("user.isConfirmed") === "true" || false,
+  token: localStorage.getItem("user.token") || null,
+  email: localStorage.getItem("user.email") || null,
 };
+
 console.log("1", "initialAuthState: ", initialAuthState);
 
 // Редуктор для управління станом аутентифікації
@@ -33,7 +40,12 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case "LOGIN":
-      return { isLogged: true, token: action.token, user: action.user };
+      return {
+        isLogged: true,
+        isConfirmed: action.isConfirmed,
+        token: action.token,
+        email: action.email,
+      };
     case "LOGOUT":
       return initialAuthState;
     default:

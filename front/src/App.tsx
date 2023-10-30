@@ -106,6 +106,7 @@ const Error: React.FC = () => {
 function App() {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
   console.log("App: state, dispatch : ", state, dispatch);
+
   // dispatch({
   //   type: "LOGIN",
   //   token: "your-token",

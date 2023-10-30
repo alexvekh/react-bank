@@ -67,16 +67,25 @@ const SignupPage: React.FC = () => {
           },
           body: JSON.stringify({ email, password }),
         });
+
+        if (response.status === 409) {
+          // Handle the case where the email already exists
+          const responseData = await response.json();
+          console.log(responseData.error);
+          console.error(responseData.error);
+          setAlert(responseData.error);
+        }
+
         if (response.ok) {
           // Registration successful, you can navigate to the next page
           const responseData = await response.json(); // Parse the JSON response
           console.log("Response Data:", responseData);
 
-          const token = responseData.token;
-          console.log("Token:", token);
+          const user = responseData.user;
+          console.log("user:", user);
 
-          localStorage.setItem("email", email);
-          localStorage.setItem("token", token);
+          //localStorage.setItem("email", email);
+          localStorage.setItem("user", user);
 
           navigate("/signup-confirm");
         } else {
