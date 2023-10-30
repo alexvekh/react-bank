@@ -6,6 +6,8 @@ class User {
     this.email = email
     this.password = password
     this.token = this.generateRandomToken(12)
+    this.isLogged = false
+    this.isConfirmed = false
 
     User.users.push(this) // Add the new user to the users array
   }

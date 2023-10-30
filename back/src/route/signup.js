@@ -26,9 +26,14 @@ router.post('/', (req, res) => {
       User.existingUser(email),
     )
 
-    if (User.getUserByEmail(email) === User) {
+    const existingUser = User.getUserByEmail(email)
+
+    if (existingUser && existingUser.email === email) {
       // Check if a user with the same email already exists
       console.log('5- pass: user exist')
+      console.log(
+        'error: A user with the same email already exists',
+      )
       return res.status(409).json({
         error: 'A user with the same email already exists',
       })
@@ -36,12 +41,15 @@ router.post('/', (req, res) => {
       console.log('5+ pass: user no exist')
       const user = new User(email, password)
       console.log('Created new user', user)
-      console.log('User.users', User.users)
-      console.log('user.token', user.token)
 
       res.status(201).json({
         message: 'User registered successfully',
-        token: user.token,
+        user: {
+          isLogged: user.isLogged,
+          isConfirmed: user.isConfirmed,
+          email: user.email,
+          token: user.token,
+        },
       })
     }
   }
