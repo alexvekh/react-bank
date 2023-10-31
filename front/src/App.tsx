@@ -6,6 +6,7 @@ import SignupPage from "./page/SignupPage";
 import AuthRoute from "./container/AuthRoute";
 import PrivateRoute from "./container/PrivateRoute";
 import SigninPage from "./page/SigninPage";
+import SignupConfirmPage from "./page/SignupConfirmPage";
 import {
   AuthContext,
   authReducer,
@@ -13,17 +14,14 @@ import {
 } from "./container/AuthContext";
 //import { AuthProvider } from "./container/AuthProvider";
 
-const SignupConfirmPage: React.FC = () => {
-  // На цій сторінці вводимо код підтвердження реєстрації акаунта
-  //та після успішного запиту переводимо на сторінку /balance
-  //Перевіряємо в контексті аутентифікації чи user.confirm. Якщо
-  //так, то переводимо на сторінку /balance
-  return (
-    <div>
-      <h1>SignupConfirmPage</h1>
-    </div>
-  );
-};
+// const SignupConfirmPage: React.FC = () => {
+
+//   return (
+//     <div>
+//       <h1>SignupConfirmPage</h1>
+//     </div>
+//   );
+// };
 
 const RecoveryPage: React.FC = () => {
   //Сторінка відновлення акаунту. Після вводу пошти, створюється

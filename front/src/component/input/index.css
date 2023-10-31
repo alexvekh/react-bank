@@ -18,14 +18,14 @@
   margin-top: 8px;
   color: black;
   border-radius: 12px;
-  border: 1px solid var(--Purple-main,#775CE5);
+  border: 1px solid var(--Grey-Border, #E9E8EB);
 }
 
-&:focus {
-  border: 2px solid var(--Purple-main, #775CE5);
+.input__field:focus {
+  border: 1px solid var(--Purple-main, #775CE5);
 }
 
-&--error {
+.input__field--error {
   color: red;
   border: 1px solid var(--Red, red);
 }

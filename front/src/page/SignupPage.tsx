@@ -57,7 +57,7 @@ const SignupPage: React.FC = () => {
     } else if (!isEmailValid) {
       setAlert("Enter e valid email!");
     } else if (!isPasswordValid) {
-      setAlert("Enter e valid password!");
+      setAlert("Minimum 8 symbols, 1 UpperCase, 1 special");
     } else {
       try {
         const response = await fetch("http://localhost:4000/signup", {
@@ -85,7 +85,10 @@ const SignupPage: React.FC = () => {
           console.log("user:", user);
 
           //localStorage.setItem("email", email);
-          localStorage.setItem("user", user);
+          localStorage.setItem("bankUserIsLogged", user.isLogged);
+          localStorage.setItem("bankUserIsConfirmed", user.isConfirmed);
+          localStorage.setItem("bankUserToken", user.token);
+          localStorage.setItem("bankUserEmail", user.email);
 
           navigate("/signup-confirm");
         } else {
@@ -127,11 +130,7 @@ const SignupPage: React.FC = () => {
             type="password"
             value={password}
             onChange={handlePasswordChange}
-            notice={
-              isPasswordValid
-                ? ""
-                : "Minimum 8 symbols, 1 upperCase and 1 special"
-            }
+            notice={isPasswordValid ? "" : "Sorry, the password is too simple"}
           />
 
           <div className="notice">

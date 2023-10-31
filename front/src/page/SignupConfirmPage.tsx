@@ -9,76 +9,25 @@ import Input from "../component/input/index";
 import InputPassword from "../component/input-password/index";
 import { useAuth } from "../container/AuthContext";
 
-// const setUserDataInLocalStorage = (user: any) => {
-//   localStorage.setItem("isLogged", user.isLogged);
-//   localStorage.setItem("isConfirmed", user.isConfirmed);
-//   localStorage.setItem("token", user.token);
-//   localStorage.setItem("email", user.email);
-// };
-
-// const getUserDataFromLocalStorage = () => {
-//   return {
-//     isLogged: localStorage.getItem("isLogged") === "true" || false,
-//     isConfirmed: localStorage.getItem("isConfirmed") === "true" || false,
-//     token: localStorage.getItem("token") || null,
-//     email: localStorage.getItem("email") || null,
-//   };
-// };
-
-//Вхід в акаунт. Зберігаємо дані аутентифікації в контекст. Якщо
-//user.confirm є false, то перенаправляємо на /signup-confirm
+// На цій сторінці вводимо код підтвердження реєстрації акаунта
+//та після успішного запиту переводимо на сторінку /balance
+//Перевіряємо в контексті аутентифікації чи user.confirm. Якщо
+//так, то переводимо на сторінку /balance
 
 const SigninPage: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [isEmailValid, setEmailIsValid] = useState(true);
-  const [isPasswordValid, setPasswordIsValid] = useState(true);
+  const [code, setCode] = useState<string>("");
   const [alert, setAlert] = useState<string>("");
   const { state, dispatch } = useAuth();
   //const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  };
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newEmail: string = e.target.value;
-    setEmail(newEmail);
-    setEmailIsValid(validateEmail(newEmail));
-  };
-
-  const validatePassword = (password: string) => {
-    // Define your password validation criteria here
-    const minLength = 8;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*]/.test(password);
-
-    return password.length >= minLength && hasUppercase && hasSpecialChar;
-  };
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newPassword: string = e.target.value;
-    setPassword(newPassword);
-    setPasswordIsValid(validatePassword(newPassword));
-  };
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    //const code: string = e.target.value;
+    const code: string = e.target.value;
     e.preventDefault();
-    setEmailIsValid(validateEmail(email));
-    setPasswordIsValid(validatePassword(password));
 
-    if (!email && !password) {
-      setAlert("Enter email and password!");
-    } else if (!email) {
-      setAlert("Enter email!");
-    } else if (!password) {
-      setAlert("Enter password!");
-    } else if (!isEmailValid) {
-      setAlert("Enter e valid email!");
-    } else if (!isPasswordValid) {
+    if (!code) {
       setAlert("Minimum 8 symbols, 1 UpperCase, 1 special");
     } else {
       try {
@@ -144,13 +93,16 @@ const SigninPage: React.FC = () => {
     <Page>
       <StatusBar color="black" />
       <ArrowBack />
-      <Title title="Sign in" description="Select login method" />
+      <Title
+        title="Confirm account"
+        description="Write the code you received"
+      />
 
       <div className="inputs">
         {/* onSubmit={handleSubmit} */}
         <form className="form" onSubmit={handleSubmit}>
           <Input
-            label="Email"
+            label="Code"
             labelClassName={isEmailValid ? "input" : "input--error"}
             borderClassName={
               isEmailValid ? "input__field" : "input__field--error"
@@ -161,24 +113,7 @@ const SigninPage: React.FC = () => {
             onChange={handleEmailChange}
             notice={isEmailValid ? "" : "Email is not valid"}
           />
-          <InputPassword
-            label="Password"
-            labelClassName={isPasswordValid ? "input" : "input--error"}
-            borderClassName={
-              isPasswordValid ? "input__field" : "input__field--error"
-            }
-            name={"password"}
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            notice={isPasswordValid ? "" : "Sorry, the password is too simple"}
-          />
-          <div className="notice">
-            Forgot your password?{" "}
-            <Link className="notice__link" to="/recovery">
-              Restore
-            </Link>
-          </div>
+
           <button className="button button-primary">Continue</button>
           {alert ? <Alert status="yellow" text={alert} /> : null}
         </form>

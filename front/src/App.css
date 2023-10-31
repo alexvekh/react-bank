@@ -167,17 +167,17 @@ body {
   margin: 20px;
 }
 
-.input {
+/* .input {
   color: black;
 }
 
 .input--error {
   color: red;
-}
+} */
 
 
 
-.input__field {
+/* .input__field {
   display: flex;
   padding: 20px 16px;
   align-items: flex-start;
@@ -206,7 +206,7 @@ body {
 
   border-radius: 12px;
   border: 1px solid var(--Red, red);
-}
+} */
 
 
 
