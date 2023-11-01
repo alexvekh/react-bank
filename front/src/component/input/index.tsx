@@ -9,7 +9,7 @@ type InputProps = {
   name: string;
   type: string;
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   notice?: string;
 };
 
@@ -41,4 +41,3 @@ const Input: React.FC<InputProps> = ({
 };
 
 export default Input;
-
