@@ -22,7 +22,11 @@
   margin-top: 8px;
   border-radius: 12px;
   color: black;
-  border: 1px solid var(--Purple-main,#775CE5);
+  border: 1px solid var(--Grey-Border, #E9E8EB);
+}
+
+.input__field:focus {
+  border: 1px solid var(--Purple-main, #775CE5);
 }
 
 .input__field--error {

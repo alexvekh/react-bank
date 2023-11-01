@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, Dispatch } from "react";
+import React, { createContext, useContext, useReducer, Dispatch } from "react";
 
 //Створюємо контекст, в якому будемо тримати дані аутентифікації
 //В контексті буде знаходитись: створений state через useReducer, який буде
@@ -13,23 +13,29 @@ type AuthState = {
 };
 
 type AuthAction =
-  | { type: "LOGIN"; isConfirmed: boolean; token: string; email: string }
+  | {
+      type: "LOGIN";
+      isLogged: boolean;
+      isConfirmed: boolean;
+      token: string;
+      email: string;
+    }
   | { type: "LOGOUT" };
 
-// export const initialAuthState: AuthState = {
-//   isLogged: false,
-//   isConfirmed: false,
-//   token: null,
-//   email: null,
-// };
+export const initialAuthState: AuthState = {
+  isLogged: false,
+  isConfirmed: false,
+  token: null,
+  email: null,
+};
 
 // Get from local storage
-export const initialAuthState: AuthState = {
-  isLogged: localStorage.getItem("user.isLogged") === "true" || false,
-  isConfirmed: localStorage.getItem("user.isConfirmed") === "true" || false,
-  token: localStorage.getItem("user.token") || null,
-  email: localStorage.getItem("user.email") || null,
-};
+// export const initialAuthState: AuthState = {
+//   isLogged: localStorage.getItem("bankUserIsLogged") === "true" || false,
+//   isConfirmed: localStorage.getItem("bankUserIsConfirmed") === "true" || false,
+//   token: localStorage.getItem("bankUserToken") || null,
+//   email: localStorage.getItem("bankUserEmail") || null,
+// };
 
 console.log("1", "initialAuthState: ", initialAuthState);
 
@@ -64,7 +70,13 @@ export const AuthContext = createContext<
   | undefined
 >(undefined);
 
-console.log("3", "AuthContext: ", AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 
 // // Компонент-постачальник контексту
 // type AuthProviderProps = {
