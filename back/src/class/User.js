@@ -6,8 +6,9 @@ class User {
     this.email = email
     this.password = password
     this.token = this.generateRandomToken(12)
-    this.isLogged = false
+    this.code = Math.floor(1000 + Math.random() * 9000)
     this.isConfirmed = false
+    this.isLogged = false
 
     User.users.push(this) // Add the new user to the users array
   }
@@ -34,7 +35,7 @@ class User {
     User.getUserByEmail(email)
 }
 
-const newUser = new User('email@example.com', 'password123')
+const newUser = new User('email@example.com', 'pasSw@rd123')
 const allUsers = User.users
 const existingUser = (email) => User.getUserByEmail(email)
 console.log('New User:', newUser)

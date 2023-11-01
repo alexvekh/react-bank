@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const signupRoute = require('./signup')
+const signupConfirmRoute = require('./signupConfirm')
 const signinRoute = require('./signin')
 
 // Підключіть файли роутів
@@ -13,6 +14,7 @@ const signinRoute = require('./signin')
 // router.use('/', test)
 // Використовуйте інші файли роутів, якщо є
 router.use('/signup', signupRoute)
+router.use('/signupConfirm', signupConfirmRoute)
 router.use('/signin', signinRoute)
 
 router.get('/', (req, res) => {
