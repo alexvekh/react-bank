@@ -41,7 +41,7 @@ const SignupConfirmPage: React.FC = () => {
       const enteredCode: Number = Number(code);
       console.log(enteredCode);
       try {
-        const response = await fetch("http://localhost:4000/signupConfirm", {
+        const response = await fetch("http://localhost:4000/signup-confirm", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

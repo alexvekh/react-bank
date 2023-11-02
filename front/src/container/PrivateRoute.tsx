@@ -25,7 +25,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
   console.log("PrivateRoute: state", state);
 
   // Перевіряємо, чи є токен
-  if (!state.token) {
+  if (!state.token || !state.isLogged) {
     // Якщо немає токена, переадресовуємо на сторінку входу
     return <Navigate to="/signin" />;
   }

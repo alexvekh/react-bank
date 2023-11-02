@@ -19,12 +19,12 @@ const AuthRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   console.log("AuthRoute: state", state);
 
   // Перевіряємо, чи є токен
-  if (state.token) {
+  if (state.token && state.isLogged) {
     // Якщо немає токена, переадресовуємо на сторінку входу
     return <Navigate to="/balance" />;
   }
 
-  // Якщо є токену нема, дозволяємо доступ до сторінок з регістрацією
+  // Якщо є токен, дозволяємо доступ до сторінок з регістрацією
   return <>{children}</>;
 };
 

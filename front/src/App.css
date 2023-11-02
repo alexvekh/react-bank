@@ -247,3 +247,126 @@ text-decoration-line: underline;
 }
 
 
+.balance-page {
+  width: 393px;
+  height: 852px;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  border-radius: 24px;
+  background: url("../public/svg/balance-background.svg") no-repeat center;
+  background-size: 101%;
+  background-position: -1px 0;
+  overflow: visible;
+}
+.balance-control {
+  text-align: center;
+  align-items: center;
+}
+
+.balance__settings {
+  margin: 10px 20px;
+  display: flex;
+  width: 353px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.balance__title {
+  color: var(--White-2, #F3F5FF);
+  text-align: center;
+  font-family: Jost;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.balance__count{
+  color: var(--White, #FFF);
+  text-align: center;
+  font-family: Jost;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  align-items: center;
+}
+.a20 {
+  color: var(--White, #FFF);
+font-family: Jost;
+font-size: 34px;
+font-style: normal;
+font-weight: 400;
+line-height: 100%;
+}
+
+.balance__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 30px auto;
+  justify-content: center;
+  gap: 4px;
+}
+
+.balance__button-icon {
+  margin: 4px;
+  display: flex;
+  padding: 12px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 100px;
+  border: 10px solid var(--BG-1, #FFF);
+  background: #5B94E9;
+}
+
+.balance__button-text {
+  color: var(--Black, #1D1D1F);
+text-align: center;
+font-family: Jost;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 100%;
+}
+
+.balance__transactions {
+  display: flex;
+  width: 353px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border-radius: 24px;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.balance__transaction {
+  text-align: center;
+  font-family: Jost;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 16px */
+  display: flex;
+  padding: 20px 140px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  text-decoration: none;
+  width: 353px;
+  transition: opacity 0.7;
+  cursor: pointer;
+}
+
+.welcome-text {
+  color: white;
+  font-size: 20px;
+}
+.welcome-space {
+  height: 600px;
+}

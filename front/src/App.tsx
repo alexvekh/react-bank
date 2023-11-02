@@ -9,6 +9,7 @@ import SigninPage from "./page/SigninPage";
 import SignupConfirmPage from "./page/SignupConfirmPage";
 import RecoveryPage from "./page/RecoveryPage";
 import RecoveryConfirmPage from "./page/RecoveryConfirmPage";
+import BalancePage from "./page/BalancePage";
 import {
   AuthContext,
   authReducer,
@@ -16,13 +17,6 @@ import {
 } from "./container/AuthContext";
 //import { AuthProvider } from "./container/AuthProvider";
 
-const BalancePage: React.FC = () => {
-  return (
-    <div>
-      <h1>BalancePage</h1>
-    </div>
-  );
-};
 const NotificationsPage: React.FC = () => {
   // Сторінка списку нотифікацій, який створюються при діях: Вхід
   //в акаунт Відновлення акаунту Зміна пароля Зміна пошти
