@@ -5,17 +5,29 @@ const router = express.Router()
 const User = require('../class/user')
 
 router.post('/', (req, res) => {
-  console.log('signupConfirm req.body', req.body)
+  console.log('req.body', req.body)
   const { email, enteredCode } = req.body
-  console.log('email and enteredCode: ', email, enteredCode)
   const user = User.getUserByEmail(email)
+  console.log(user)
+  console.log(
+    'email and enteredCode: ',
+    email,
+    enteredCode,
+    'user.code',
+    user.code,
+  )
 
   if (enteredCode !== user.code) {
-    return res.status(400).json({
+    console.log('Invalid code')
+    return res.status(409).json({
       error: 'Invalid code',
     })
   } else {
-    res.status(200).json({
+    console.log('Good code')
+    user.isConfirmed = true
+    console.log('user.isConfirmed', user)
+
+    return res.status(201).json({
       message: 'Code confirmed successfully',
       user: {
         isLogged: user.isLogged,

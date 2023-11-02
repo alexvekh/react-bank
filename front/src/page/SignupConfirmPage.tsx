@@ -6,14 +6,15 @@ import Alert from "../component/alert/index";
 import Page from "../component/page/index";
 import Title from "../component/title/index";
 import Input from "../component/input/index";
-import { useAuth, AuthContext } from "../container/AuthContext";
+import { useAuth } from "../container/AuthContext";
+import { setUserDataInLocalStorage } from "../component/Utils";
 
 // На цій сторінці вводимо код підтвердження реєстрації акаунта
 //та після успішного запиту переводимо на сторінку /balance
 //Перевіряємо в контексті аутентифікації чи user.confirm. Якщо
 //так, то переводимо на сторінку /balance
 
-const SigninPage: React.FC = () => {
+const SignupConfirmPage: React.FC = () => {
   const [code, setCode] = useState<string>("");
   const [alert, setAlert] = useState<string>("");
   const { state, dispatch } = useAuth();
@@ -48,39 +49,32 @@ const SigninPage: React.FC = () => {
           body: JSON.stringify({ email, enteredCode }),
         });
 
-        if (response.status === 400) {
+        if (response.status === 409) {
           // 'Invalid code'
           const responseData = await response.json();
           console.error(responseData.error);
+          setCode("");
           setAlert(responseData.error);
         }
 
         if (response.ok) {
           // Code confirmed
           const responseData = await response.json(); // Parse the JSON response
-          console.log("Response Data:", responseData);
+          console.log("Response OK responseData:", responseData);
           const user = responseData.user;
           console.log("user:", user);
           console.log("dispatch:", user);
-
           // Dispatch the "LOGIN" action to update the state
-          dispatch({
-            type: "LOGIN",
-            isLogged: user.isLogged,
-            isConfirmed: user.isConfirmed,
-            token: user.token,
-            email: user.email,
-          });
+          dispatch({ type: "LOGIN", payload: user });
 
           console.log("after dispatch:", user);
           //dispatch({ type: "LOGIN", payload: user })
 
           // LocalStorage
-          localStorage.setItem("bankUserIsLogged", user.isLogged);
-          localStorage.setItem("bankUserIsConfirmed", user.isConfirmed);
-          localStorage.setItem("bankUserToken", user.token);
-          localStorage.setItem("bankUserEmail", user.email);
+          //setUserDataInLocalStorage(user);
+
           if (state && state.isConfirmed) {
+            console.log(state);
             navigate("/balance");
           }
         } else {
@@ -105,15 +99,19 @@ const SigninPage: React.FC = () => {
         <form className="form" onSubmit={handleSubmit}>
           <Input
             label="Code"
-            labelClassName="input"
-            borderClassName="input__field"
+            labelClassName={alert ? "input--error" : "input"}
+            borderClassName={alert ? "input__field--error" : "input__field"}
             name={"code"}
             type="text"
             value={code}
-            onChange={(e) => setCode(e.target.value)}
-            notice=""
+            onChange={(e) => {
+              setCode(e.target.value);
+              setAlert("");
+            }}
+            notice={alert ? "Invalid code" : ""}
+            autoFocus
           />
-          <button className="button button-primary">Continue</button>
+          <button className="button button-primary">Confirm</button>
           {alert ? <Alert status="yellow" text={alert} /> : null}
         </form>
       </div>
@@ -122,4 +120,4 @@ const SigninPage: React.FC = () => {
   );
 };
 
-export default SigninPage;
+export default SignupConfirmPage;

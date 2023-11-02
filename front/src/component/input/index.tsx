@@ -11,6 +11,7 @@ type InputProps = {
   value: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   notice?: string;
+  autoFocus?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -22,6 +23,7 @@ const Input: React.FC<InputProps> = ({
   value,
   onChange,
   notice,
+  autoFocus,
 }) => {
   return (
     <div className={labelClassName}>
@@ -33,6 +35,7 @@ const Input: React.FC<InputProps> = ({
           type={type}
           value={value}
           onChange={onChange}
+          autoFocus
         />
         {notice}
       </label>

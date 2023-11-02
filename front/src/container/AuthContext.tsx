@@ -15,10 +15,12 @@ type AuthState = {
 type AuthAction =
   | {
       type: "LOGIN";
-      isLogged: boolean;
-      isConfirmed: boolean;
-      token: string;
-      email: string;
+      payload: {
+        isLogged: boolean;
+        isConfirmed: boolean;
+        token: string;
+        email: string;
+      };
     }
   | { type: "LOGOUT" };
 
@@ -47,10 +49,11 @@ export const authReducer = (
   switch (action.type) {
     case "LOGIN":
       return {
-        isLogged: true,
-        isConfirmed: action.isConfirmed,
-        token: action.token,
-        email: action.email,
+        ...state,
+        isLogged: action.payload.isLogged,
+        isConfirmed: action.payload.isConfirmed,
+        token: action.payload.token,
+        email: action.payload.email,
       };
     case "LOGOUT":
       return initialAuthState;
