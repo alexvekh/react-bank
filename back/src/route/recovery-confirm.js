@@ -6,17 +6,21 @@ const User = require('../class/user')
 
 router.post('/', (req, res) => {
   console.log('signin  req.body', req.body)
-  const { email, password } = req.body
-  console.log('signin email, password: ', email, password)
+  const { email, password, enteredCode } = req.body
+  console.log(
+    'email, password, code: ',
+    email,
+    password,
+    enteredCode,
+  )
 
-  if (!email || !password) {
+  if (!enteredCode || !password) {
     // Check if email or password are missing
-    console.log('3- pass: !email || !password')
+    console.log('!code || !password')
     return res
       .status(400)
-      .json({ error: 'Email and password are required' })
+      .json({ error: 'Code and password are required' })
   } else {
-    console.log('email and Password', email.password)
     const user = User.getUserByEmail(email)
     console.log(user)
 
@@ -26,19 +30,21 @@ router.post('/', (req, res) => {
       return res.status(409).json({
         error: "A user with this email isn't exists",
       })
-    } else if (user.password !== password) {
-      console.log('wrong password')
+    } else if (enteredCode !== user.code) {
+      console.log('wrong code')
       return res.status(409).json({
-        error: 'Wrong password',
+        error: 'Wrong code',
       })
     } else {
-      user.isLogged = true
-      console.log('user.isLogged', user)
+      user.password = password
+      user.isConfirmed = true
+      user.isLogged = false
+      console.log('user with new password', user)
       //User.getUserByEmail(user.email).isLogged = true
       //console.log(User.getUserByEmail(user.email))
 
       res.status(201).json({
-        message: 'User is logged successfully',
+        message: 'Password is changed successfully',
         user: {
           isLogged: user.isLogged,
           isConfirmed: user.isConfirmed,

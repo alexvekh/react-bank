@@ -7,6 +7,7 @@ import Page from "../component/page/index";
 import Title from "../component/title/index";
 import Input from "../component/input/index";
 import InputPassword from "../component/input-password/index";
+import { useAuth } from "../container/AuthContext";
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -14,6 +15,7 @@ const SignupPage: React.FC = () => {
   const [isEmailValid, setEmailIsValid] = useState(true);
   const [isPasswordValid, setPasswordIsValid] = useState(true);
   const [alert, setAlert] = useState<string>("");
+  const { state, dispatch } = useAuth();
 
   const validateEmail = (email: string): boolean => {
     const emailRegex: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -84,11 +86,10 @@ const SignupPage: React.FC = () => {
           const user = responseData.user;
           console.log("user:", user);
 
-          //localStorage.setItem("email", email);
-          localStorage.setItem("bankUserIsLogged", user.isLogged);
-          localStorage.setItem("bankUserIsConfirmed", user.isConfirmed);
-          localStorage.setItem("bankUserToken", user.token);
-          localStorage.setItem("bankUserEmail", user.email);
+          dispatch({ type: "LOGIN", payload: user });
+
+          // LocalStorage
+          // setUserDataInLocalStorage(user);
 
           navigate("/signup-confirm");
         } else {

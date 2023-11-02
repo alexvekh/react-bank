@@ -11,12 +11,12 @@ router.post('/', (req, res) => {
 
   if (!email || !password) {
     // Check if email or password are missing
-    console.log('3- pass: !email || !password')
+    console.log('!email || !password')
     return res
       .status(400)
       .json({ error: 'Email and password are required' })
   } else {
-    console.log('3+ pass: email and Password OK ')
+    console.log(' email and Password OK ')
     console.log(
       '4. GetUserByEmail:',
       User.getUserByEmail(email),
@@ -30,7 +30,6 @@ router.post('/', (req, res) => {
 
     if (existingUser && existingUser.email === email) {
       // Check if a user with the same email already exists
-      console.log('5- pass: user exist')
       console.log(
         'error: A user with the same email already exists',
       )
@@ -38,7 +37,7 @@ router.post('/', (req, res) => {
         error: 'A user with the same email already exists',
       })
     } else {
-      console.log('5+ pass: user no exist')
+      console.log('user no exist')
       const user = new User(email, password)
       console.log('Created new user', user)
 

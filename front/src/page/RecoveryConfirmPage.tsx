@@ -1,5 +1,5 @@
-import React, { useState, useReducer, ChangeEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, ChangeEvent } from "react";
+import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 import StatusBar from "../component/status-bar/index";
 import ArrowBack from "../component/arrow-back/index";
 import Alert from "../component/alert/index";
@@ -8,37 +8,27 @@ import Title from "../component/title/index";
 import Input from "../component/input/index";
 import InputPassword from "../component/input-password/index";
 import { useAuth } from "../container/AuthContext";
-import { setUserDataInLocalStorage } from "../component/Utils";
 
-//Вхід в акаунт. Зберігаємо дані аутентифікації в контекст. Якщо
-//user.confirm є false, то перенаправляємо на /signup-confirm
+//Сторінка підтвердження відновлення та оновлення пароля. Після
+//відправки форми потрібно перевести на сторінку /balance
 
-const SigninPage: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
+const RecoveryConfirmPage: React.FC = () => {
   const [password, setPassword] = useState<string>("");
-  const [isEmailValid, setEmailIsValid] = useState(true);
+  const [code, setCode] = useState<string>("");
   const [isPasswordValid, setPasswordIsValid] = useState(true);
   const [alert, setAlert] = useState<string>("");
   const { state, dispatch } = useAuth();
-  //const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  };
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newEmail: string = e.target.value;
-    setEmail(newEmail);
-    setEmailIsValid(validateEmail(newEmail));
-  };
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const email = searchParams.get("email");
+  console.log("email", email);
 
   const validatePassword = (password: string) => {
     // Define your password validation criteria here
     const minLength = 8;
     const hasUppercase = /[A-Z]/.test(password);
     const hasSpecialChar = /[!@#$%^&*]/.test(password);
-
     return password.length >= minLength && hasUppercase && hasSpecialChar;
   };
 
@@ -52,27 +42,25 @@ const SigninPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmailIsValid(validateEmail(email));
     setPasswordIsValid(validatePassword(password));
-
-    if (!email && !password) {
-      setAlert("Enter email and password!");
-    } else if (!email) {
-      setAlert("Enter email!");
+    if (!code && !password) {
+      setAlert("Enter code and password!");
+    } else if (!code) {
+      setAlert("Enter code you recived!");
     } else if (!password) {
-      setAlert("Enter password!");
-    } else if (!isEmailValid) {
-      setAlert("Enter e valid email!");
+      setAlert("Create a password!");
     } else if (!isPasswordValid) {
       setAlert("Minimum 8 symbols, 1 UpperCase, 1 special");
     } else {
+      const enteredCode: Number = Number(code);
+      console.log(email, password, enteredCode);
       try {
-        const response = await fetch("http://localhost:4000/signin", {
+        const response = await fetch("http://localhost:4000/recovery-confirm", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ email, password, enteredCode }),
         });
 
         if (response.status === 409) {
@@ -89,22 +77,14 @@ const SigninPage: React.FC = () => {
           console.log("Response Data:", responseData);
 
           const user = responseData.user;
+          console.log("user:", user);
 
-          console.info("dispatch:", user);
-
-          // Dispatch the "LOGIN" action to update the state
           dispatch({ type: "LOGIN", payload: user });
-
-          //dispatch({ type: "LOGIN", payload: user })
 
           // LocalStorage
           // setUserDataInLocalStorage(user);
 
-          if (user.isConfirmed) {
-            navigate("/balance");
-          } else {
-            navigate("/signup-confirm");
-          }
+          navigate("/signup-confirm");
         } else {
           // Handle registration errors
           console.error("Registration failed");
@@ -119,22 +99,25 @@ const SigninPage: React.FC = () => {
     <Page>
       <StatusBar color="black" />
       <ArrowBack />
-      <Title title="Sign in" description="Select login method" />
-
+      <Title
+        title="Recover password"
+        description="Write the code you received"
+      />
       <div className="inputs">
-        {/* onSubmit={handleSubmit} */}
         <form className="form" onSubmit={handleSubmit}>
           <Input
-            label="Email"
-            labelClassName={isEmailValid ? "input" : "input--error"}
-            borderClassName={
-              isEmailValid ? "input__field" : "input__field--error"
-            }
-            name={"email"}
+            label="Code"
+            labelClassName={alert ? "input--error" : "input"}
+            borderClassName={alert ? "input__field--error" : "input__field"}
+            name={"code"}
             type="text"
-            value={email}
-            onChange={handleEmailChange}
-            notice={isEmailValid ? "" : "Email is not valid"}
+            value={code}
+            onChange={(e) => {
+              setCode(e.target.value);
+              setAlert("");
+            }}
+            notice={alert ? "Invalid code" : ""}
+            autoFocus
           />
           <InputPassword
             label="Password"
@@ -148,25 +131,14 @@ const SigninPage: React.FC = () => {
             onChange={handlePasswordChange}
             notice={isPasswordValid ? "" : "Sorry, the password is too simple"}
           />
-          <div className="notice">
-            Forgot your password?{" "}
-            <Link className="notice__link" to="/recovery">
-              Restore
-            </Link>
-          </div>
-          <button className="button button-primary">Continue</button>
+          <button className="button button-primary" type="submit">
+            Restore&nbsp;password
+          </button>
           {alert ? <Alert status="yellow" text={alert} /> : null}
         </form>
       </div>
-
-      {/* <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
-      </div> */}
-
-      <Link to="/signup"></Link>
     </Page>
   );
 };
 
-export default SigninPage;
+export default RecoveryConfirmPage;

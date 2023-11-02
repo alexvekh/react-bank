@@ -7,6 +7,8 @@ import AuthRoute from "./container/AuthRoute";
 import PrivateRoute from "./container/PrivateRoute";
 import SigninPage from "./page/SigninPage";
 import SignupConfirmPage from "./page/SignupConfirmPage";
+import RecoveryPage from "./page/RecoveryPage";
+import RecoveryConfirmPage from "./page/RecoveryConfirmPage";
 import {
   AuthContext,
   authReducer,
@@ -14,34 +16,6 @@ import {
 } from "./container/AuthContext";
 //import { AuthProvider } from "./container/AuthProvider";
 
-// const SignupConfirmPage: React.FC = () => {
-
-//   return (
-//     <div>
-//       <h1>SignupConfirmPage</h1>
-//     </div>
-//   );
-// };
-
-const RecoveryPage: React.FC = () => {
-  //Сторінка відновлення акаунту. Після вводу пошти, створюється
-  //код з підтвердженням відновлення акаунту, переводимо на
-  //сторінку /recovery-confirm
-  return (
-    <div>
-      <h1>RecoveryPage</h1>
-    </div>
-  );
-};
-const RecoveryConfirmPage: React.FC = () => {
-  //Сторінка підтвердження відновлення та оновлення пароля. Після
-  //відправки форми потрібно перевести на сторінку /balance
-  return (
-    <div>
-      <h1>RecoveryConfirmPage</h1>
-    </div>
-  );
-};
 const BalancePage: React.FC = () => {
   return (
     <div>
@@ -105,16 +79,6 @@ function App() {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
   console.log("App: state, dispatch : ", state, dispatch);
 
-  // dispatch({
-  //   type: "LOGIN",
-  //   token: "your-token",
-  //   user: { username: "John", email: "john@email.com" },
-  // });
-  // state.isLogged = true;
-  // state.token = "222";
-  // Сохранение токена: localStorage.setItem('token', 'ваш_токен');
-  // Получение токена: const token = localStorage.getItem('token');
-
   console.log("App:state, dispatch entered: ", state, dispatch);
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
@@ -140,10 +104,6 @@ function App() {
             path="/signup-confirm"
             element={
               <PrivateRoute>
-                {/* //На сторінці /signup-confirm використовуємо PrivateRoute, адже
-                //підтвердити акаунт може користувач, який вже увійшов в
-                //акаунтПісля підтвердження акаунту потрібно оновити дані
-                //аутентифікації в контексті */}
                 <SignupConfirmPage />
               </PrivateRoute>
             }
