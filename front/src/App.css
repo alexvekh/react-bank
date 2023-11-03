@@ -292,6 +292,11 @@ text-decoration-line: underline;
   line-height: 100%;
   align-items: center;
 }
+
+.balance-cents {
+  font-weight: 400;
+}
+
 .a20 {
   color: var(--White, #FFF);
 font-family: Jost;
@@ -329,6 +334,11 @@ font-size: 14px;
 font-style: normal;
 font-weight: 400;
 line-height: 100%;
+text-decoration: none;
+}
+
+.balance-link {
+  text-decoration: none;
 }
 
 .balance__transactions {
@@ -343,30 +353,5 @@ line-height: 100%;
   margin-bottom: 35px;
 }
 
-.balance__transaction {
-  text-align: center;
-  font-family: Jost;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 100%; /* 16px */
-  display: flex;
-  padding: 20px 140px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  align-self: stretch;
-  border-radius: 12px;
-  text-decoration: none;
-  width: 353px;
-  transition: opacity 0.7;
-  cursor: pointer;
-}
 
-.welcome-text {
-  color: white;
-  font-size: 20px;
-}
-.welcome-space {
-  height: 600px;
-}
+
