@@ -11,26 +11,25 @@ const BalancePage: React.FC = () => {
   const userEmail = state.email;
   console.log(userEmail);
   const url = `http://localhost:4000/balance?email=${userEmail}`;
-  fetchData();
-
-  async function fetchData() {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  try {
+    const response = fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Parse the JSON response
+        } else {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then((data) => {
+        console.log("Data fetched:", data);
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("data:", data);
-      } else {
-        console.error("Network response was not ok");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
 
   return (
