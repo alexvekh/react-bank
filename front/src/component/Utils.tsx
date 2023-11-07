@@ -28,9 +28,18 @@ export const validateEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
+class AmountSplitter {
+  static splitAmount(amount: number) {
+    const dollars = Math.floor(amount);
+    const cents = (amount - dollars) * 100;
+    return { dollars, cents };
+  }
+}
+
 export default {
   setUserDataInLocalStorage,
   getUserDataFromLocalStorage,
   validateEmail,
+  AmountSplitter,
   // Add more utility functions here if needed
 };

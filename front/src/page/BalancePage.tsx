@@ -1,36 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import StatusBar from "../component/status-bar";
 import TransactionItem from "../component/transaction-item";
 import { useAuth } from "../container/AuthContext";
+import AmountSplitter from "../component/AmountSplitter";
 
 //На цій сторінці ми створюємо верстку та розміщуємо дві
 //кнопки-посилання на сторінку /signup та сторінку /signin
+
+type Transaction = {
+  id: number;
+  correspondent: string;
+  timestamp: Date;
+  type: string;
+  amount: number;
+};
+
 const BalancePage: React.FC = () => {
   const { state } = useAuth();
   const userEmail = state.email;
   console.log(userEmail);
+
+  const [balance, setBalance] = useState<number>(0);
+  const { dollars: balanceDoll, cents: balanceCents } =
+    AmountSplitter.splitAmount(balance);
+
+  //const [transactions, setTransactions] = useState<Transaction[]>([]); // All the time tefreshing back-end
+  let transactions: Transaction[] = [];
+
   const url = `http://localhost:4000/balance?email=${userEmail}`;
-  fetchData();
-
-  async function fetchData() {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  try {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Parse the JSON response
+        } else {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then((data) => {
+        console.log("Data fetched:", data);
+        setBalance(data.user.balance);
+        console.log(data.user.transactions);
+        transactions = data.user.transactions;
+        //setTransactions(data.user.transactions); // All the time tefreshing back-end
+        console.log("passed", transactions);
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("data:", data);
-      } else {
-        console.error("Network response was not ok");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
 
   return (
@@ -52,8 +74,10 @@ const BalancePage: React.FC = () => {
         </div>
         <div className="balance__count">
           <span>$</span>
-          <span>100</span>
-          <span className="balance-cents">.20</span>
+          <span>{balanceDoll}</span>
+          <span className="balance-cents">
+            .{balanceCents.toString().padStart(2, "0")}
+          </span>
         </div>
         <div className="balance__actions">
           <Link className="balance-link" to="/recive">
@@ -77,7 +101,13 @@ const BalancePage: React.FC = () => {
       </div>
 
       <div className="balance__transactions">
-        <TransactionItem />
+        <ul>
+          {transactions.map((transaction) => (
+            <li key={transaction.id}>
+              <TransactionItem transaction={transaction} />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -1,10 +1,8 @@
 // Підключаємо роутер до бек-енду
-const express = require('express')
-const router = express.Router()
 
 const User = require('../class/user')
 const Transaction = require('../class/transaction')
-const TransactionHandler = require('../class/transactionHandler')
+
 //  ==========================
 const nick = new User('test1@mail.com', 'Password@1')
 console.log('Created user:', nick)
@@ -15,30 +13,36 @@ bob.balance = 1222.35
 console.log('Credit bob $1222.35')
 
 //
+const transaction1 = new Transaction(
+  'email@example.com',
+  'test1@mail.com',
+  11,
+)
+const transaction2 = new Transaction(
+  'email@example.com',
+  'test1@mail.com',
+  22,
+)
+const transaction3 = new Transaction(
+  'email@example.com',
+  'test1@mail.com',
+  33,
+)
+console.log('Created 3 transactions')
+
+console.log(Transaction.transactions)
 
 try {
-  TransactionHandler.processTransaction(
+  console.log(' try processTransaction')
+  transaction1.processTransaction(
     'email@example.com',
     'test1@mail.com',
-    11,
-  )
-
-  TransactionHandler.processTransaction(
-    'email@example.com',
-    'test1@mail.com',
+    new Date(),
     22,
-  )
-
-  TransactionHandler.processTransaction(
-    'email@example.com',
-    'test1@mail.com',
-    33,
   )
 } catch (error) {
   console.error(error)
 }
-
-console.log('Created 3 transactions')
 //=======================
 router.get('/', (req, res) => {
   console.log('GET request')
