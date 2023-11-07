@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import StatusBar from "../component/status-bar";
 import TransactionItem from "../component/transaction-item";
@@ -11,7 +11,7 @@ import AmountSplitter from "../component/AmountSplitter";
 type Transaction = {
   id: number;
   correspondent: string;
-  timestamp: Date;
+  timestamp: string;
   type: string;
   amount: number;
 };
@@ -25,35 +25,37 @@ const BalancePage: React.FC = () => {
   const { dollars: balanceDoll, cents: balanceCents } =
     AmountSplitter.splitAmount(balance);
 
-  //const [transactions, setTransactions] = useState<Transaction[]>([]); // All the time tefreshing back-end
-  let transactions: Transaction[] = [];
+  const [transactions, setTransactions] = useState<Transaction[]>([]); // All the time tefreshing back-end
+  //let transactions: Transaction[] = [];
+  console.log("transactions 3:", transactions);
 
-  const url = `http://localhost:4000/balance?email=${userEmail}`;
-  try {
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse the JSON response
-        } else {
-          throw new Error("Network response was not ok");
-        }
+  useEffect(() => {
+    const url = `http://localhost:4000/balance?email=${userEmail}`;
+    try {
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .then((data) => {
-        console.log("Data fetched:", data);
-        setBalance(data.user.balance);
-        console.log(data.user.transactions);
-        transactions = data.user.transactions;
-        //setTransactions(data.user.transactions); // All the time tefreshing back-end
-        console.log("passed", transactions);
-      });
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
+        .then((response) => {
+          if (response.ok) {
+            return response.json(); // Parse the JSON response
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => {
+          console.log("Data fetched:", data);
+          setBalance(data.user.balance);
+          console.log(data.user.transactions);
+          //transactions = data.user.transactions;
+          setTransactions(data.user.transactions); // All the time tefreshing back-end
+        });
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }, [userEmail]);
 
   return (
     <div className="balance-page">
@@ -75,9 +77,7 @@ const BalancePage: React.FC = () => {
         <div className="balance__count">
           <span>$</span>
           <span>{balanceDoll}</span>
-          <span className="balance-cents">
-            .{balanceCents.toString().padStart(2, "0")}
-          </span>
+          <span className="balance-cents">{balanceCents}</span>
         </div>
         <div className="balance__actions">
           <Link className="balance-link" to="/recive">

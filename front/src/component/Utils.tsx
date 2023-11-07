@@ -36,10 +36,41 @@ class AmountSplitter {
   }
 }
 
+export function formatTimestamp(timestamp: string) {
+  const date = new Date(timestamp);
+  const now = new Date();
+
+  if (date.toDateString() === now.toDateString()) {
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  } else {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const formattedDate = `${months[date.getMonth()]} ${date.getDate()}`;
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${formattedDate} ${hours}:${minutes}`;
+  }
+}
+
 export default {
   setUserDataInLocalStorage,
   getUserDataFromLocalStorage,
   validateEmail,
   AmountSplitter,
+  formatTimestamp,
   // Add more utility functions here if needed
 };

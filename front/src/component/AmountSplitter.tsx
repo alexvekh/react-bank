@@ -1,7 +1,8 @@
 class AmountSplitter {
-  static splitAmount(amount: number): { dollars: number; cents: number } {
+  static splitAmount(amount: number): { dollars: number; cents: string } {
     const dollars = Math.floor(amount);
-    const cents = Math.round((amount - dollars) * 100);
+    const cents = (amount - dollars).toFixed(2).substring(1);
+    console.log("dollars", dollars, "cents", cents);
 
     return { dollars, cents };
   }

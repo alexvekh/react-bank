@@ -26,9 +26,9 @@ class TransactionHandler {
         senderUser.transactions.push({
           id: senderUser.transactions.length + 1,
           correspondent: receiverEmail,
-          tymestamp: new Date(),
+          timestamp: new Date(),
           type: 'Sending',
-          amount: -amount,
+          amount,
         })
         console.log(
           'senderUser.transactions: ',
@@ -38,7 +38,7 @@ class TransactionHandler {
         receiverUser.transactions.push({
           id: receiverUser.transactions.length + 1,
           correspondent: senderEmail,
-          tymestamp: new Date(),
+          timestamp: new Date(),
           type: 'Receipt',
           amount,
         })
