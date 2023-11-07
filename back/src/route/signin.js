@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../class/user')
+const testData = require('./test')
 
 router.post('/', (req, res) => {
   console.log('signin  req.body', req.body)

@@ -24,11 +24,18 @@ type AuthAction =
     }
   | { type: "LOGOUT" };
 
+// export const initialAuthState: AuthState = {
+//   isLogged: false,
+//   isConfirmed: false,
+//   token: null,
+//   email: null,
+// };
+
 export const initialAuthState: AuthState = {
-  isLogged: false,
-  isConfirmed: false,
-  token: null,
-  email: null,
+  isLogged: true,
+  isConfirmed: true,
+  token: "d0EBy%knT%mo",
+  email: "email@example.com",
 };
 
 // Get from local storage
