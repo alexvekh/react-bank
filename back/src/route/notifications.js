@@ -31,8 +31,7 @@ router.get('/', (req, res) => {
       console.log('user', user)
       res.status(201).json({
         user: {
-          balance: user.balance,
-          transactions: user.transactions,
+          notifications: user.notifications,
         },
       })
     }
