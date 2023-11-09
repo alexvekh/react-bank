@@ -1,12 +1,7 @@
-enum NOTIFICATION_TYPE {
-  WARNING = 'warning',
-  ANNOUNSMENT = 'announcement',
-}
-
 class Notification {
   constructor(message, type) {
     this.message = message
-    this.type = type === NOTIFICATION_TYPE.WARNING || type === NOTIFICATION_TYPE.ANNOUNSMENT
+    this.type = 'Announcement' || 'Warning'
     this.time = new Date()
   }
 }

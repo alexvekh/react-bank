@@ -2,6 +2,7 @@
 
 const User = require('../class/user')
 const TransactionHandler = require('../class/transactionHandler')
+const Notification = require('../class/notification')
 
 //  ===========
 function TestData() {
@@ -12,6 +13,19 @@ function TestData() {
   console.log('Created user:', bob)
   bob.balance = 1222.35
   console.log('Credit bob $1222.35')
+  bob.notifications.push(
+    new Notification('New reward system', 'Announcement'),
+  )
+  bob.notifications.push(
+    new Notification('New login', 'Werning'),
+  )
+  bob.notifications.push(
+    new Notification('New reward system', 'Announcement'),
+  )
+  bob.notifications.push(
+    new Notification('New login', 'Announcement'),
+  )
+  console.log(bob.notifications)
 
   //
 
@@ -38,6 +52,7 @@ function TestData() {
   }
 
   console.log('Created 3 transactions')
+  console.log(User.users)
 }
 // Експортуємо глобальний роутер
 module.exports = TestData()

@@ -10,33 +10,14 @@ import SignupConfirmPage from "./page/SignupConfirmPage";
 import RecoveryPage from "./page/RecoveryPage";
 import RecoveryConfirmPage from "./page/RecoveryConfirmPage";
 import BalancePage from "./page/BalancePage";
+import SettingsPage from "./page/SettingsPage";
+import NotificationsPage from "./page/NotificationsPage";
 import {
   AuthContext,
   authReducer,
   initialAuthState,
 } from "./container/AuthContext";
 //import { AuthProvider } from "./container/AuthProvider";
-
-const NotificationsPage: React.FC = () => {
-  // Сторінка списку нотифікацій, який створюються при діях: Вхід
-  //в акаунт Відновлення акаунту Зміна пароля Зміна пошти
-  // Поповнення Переказ
-  return (
-    <div>
-      <h1>NotificationsPage</h1>
-    </div>
-  );
-};
-const SettingsPage: React.FC = () => {
-  //Сторінка налаштувань, на якій можна: Змінити пароль Змінити
-  //пошту Вийти з акаунту Кожна дія повинна в кінці оновлювати
-  //контекст аутентифікації
-  return (
-    <div>
-      <h1>SettingsPage</h1>
-    </div>
-  );
-};
 
 const RecivePage: React.FC = () => {
   //Сторінка поповнення балансу. Користувач вводить суму, натискає
