@@ -28,6 +28,15 @@ export const validateEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
+export const validatePassword = (password: string) => {
+  // Define your password validation criteria here
+  const minLength = 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasSpecialChar = /[!@#$%^&*]/.test(password);
+
+  return password.length >= minLength && hasUppercase && hasSpecialChar;
+};
+
 class AmountSplitter {
   static splitAmount(amount: number) {
     const dollars = Math.floor(amount);
@@ -70,6 +79,7 @@ export default {
   setUserDataInLocalStorage,
   getUserDataFromLocalStorage,
   validateEmail,
+  validatePassword,
   AmountSplitter,
   formatTimestamp,
   // Add more utility functions here if needed

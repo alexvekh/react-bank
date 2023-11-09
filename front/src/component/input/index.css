@@ -10,12 +10,15 @@
 
 .input__field {
   display: flex;
-  padding: 20px 16px;
+  padding: 18px 16px;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
+  font-family: Jost;
+  font-size: 14px;
   align-self: stretch;
   width: 353px;
   margin-top: 8px;
+  
   color: black;
   border-radius: 12px;
   border: 1px solid var(--Grey-Border, #E9E8EB);

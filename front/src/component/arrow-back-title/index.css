@@ -1,0 +1,30 @@
+.arrow-title {
+  display: flex;
+  width: 353px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 20px;
+}
+.arrow-back {
+  margin-right: 0;
+}
+
+.arrow-title__space {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 2px 3px 3px 3px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.page__title {
+  color: var(--100, #121212);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 20px */
+  text-align: center;
+
+}

@@ -8,6 +8,9 @@ const signinRoute = require('./signin')
 const recoveryRoute = require('./recovery')
 const recoveryConfirmRoute = require('./recovery-confirm')
 const balanceRoute = require('./balance')
+const changeEmailRoute = require('./change-email')
+const changePasswordRoute = require('./change-password')
+const notificationsRoute = require('./notifications')
 
 // Підключіть файли роутів
 // const test = require('./test')
@@ -22,6 +25,9 @@ router.use('/signin', signinRoute)
 router.use('/recovery', recoveryRoute)
 router.use('/recovery-confirm', recoveryConfirmRoute)
 router.use('/balance', balanceRoute)
+router.use('/change-email', changeEmailRoute)
+router.use('/change-password', changePasswordRoute)
+router.use('/notifications', notificationsRoute)
 
 router.get('/', (req, res) => {
   res.status(200).json('Hello World')

@@ -14,11 +14,14 @@
 
 .input__field {
   display: flex;
-  padding: 20px 40px 20px 16px;
+  padding: 16px;
   align-items: flex-start;
   gap: 16px;
   align-self: stretch;
   width: 353px;
+  font-family: Jost;
+  font-size: 14px;
+  align-self: stretch;
   margin-top: 8px;
   border-radius: 12px;
   color: black;
@@ -31,9 +34,10 @@
 
 .input__field--error {
   display: flex;
-  padding: 20px 40px 20px 16px;
+  padding: 16px;
   align-items: flex-start;
   gap: 16px;
+  font-size: 14px;
   align-self: stretch;
   width: 353px;
   margin-top: 8px;
