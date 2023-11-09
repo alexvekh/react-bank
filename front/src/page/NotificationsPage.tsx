@@ -15,6 +15,7 @@ import Input from "../component/input/index";
 import { useAuth } from "../container/AuthContext";
 import { setUserDataInLocalStorage } from "../component/Utils";
 import ArrowBackTitle from "../component/arrow-back-title";
+import Notification from "../component/notification";
 
 // Сторінка списку нотифікацій, який створюються при діях: Вхід
 //в акаунт Відновлення акаунту Зміна пароля Зміна пошти
@@ -81,18 +82,18 @@ const NotificationsPage: React.FC = () => {
         <ArrowBackTitle title="Notifications" />
         <div className="balance__transactions">
           <ul>
-            {/* {notifications.map((notification) => (
-              <li key={notification.id}>
+            {notifications.map((notification, index) => (
+              <li key={index}>
                 <Notification notification={notification} />
               </li>
-            ))} */}
+            ))}
+          </ul>
 
-            <li>
+          {/* <li>
               <div style={{ backgroundColor: "white", height: "40px" }}>
                 dddd ddddd dddddddd
               </div>
-            </li>
-          </ul>
+            </li> */}
         </div>
       </Page>
     </body>
