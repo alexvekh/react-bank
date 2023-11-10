@@ -75,6 +75,38 @@ export function formatTimestamp(timestamp: string) {
   }
 }
 
+export function formatTimeAgo(timestamp: string): string {
+  const now = new Date();
+  const timeDifference = now.getTime() - new Date(timestamp).getTime();
+
+  const minutes = Math.floor(timeDifference / (1000 * 60));
+  const hours = Math.floor(minutes / 60);
+
+  if (minutes < 1) {
+    return "just now";
+  } else if (minutes === 1) {
+    return "1 min. ago";
+  } else if (minutes < 60) {
+    return `${minutes} min. ago`;
+  } else if (hours === 1) {
+    return "1 hour ago";
+  } else {
+    return `${hours} hours ago`;
+  }
+}
+
+export const formatDate = (timestamp: string): string => {
+  const date = new Date(timestamp);
+  const options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
+  return formattedDate;
+};
+
 export default {
   setUserDataInLocalStorage,
   getUserDataFromLocalStorage,
@@ -82,5 +114,7 @@ export default {
   validatePassword,
   AmountSplitter,
   formatTimestamp,
+  formatTimeAgo,
+  formatDate,
   // Add more utility functions here if needed
 };

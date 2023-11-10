@@ -11,6 +11,7 @@ const balanceRoute = require('./balance')
 const changeEmailRoute = require('./change-email')
 const changePasswordRoute = require('./change-password')
 const notificationsRoute = require('./notifications')
+const transactionRoute = require('./transaction')
 
 // Підключіть файли роутів
 // const test = require('./test')
@@ -28,6 +29,7 @@ router.use('/balance', balanceRoute)
 router.use('/change-email', changeEmailRoute)
 router.use('/change-password', changePasswordRoute)
 router.use('/notifications', notificationsRoute)
+router.use('/transaction', transactionRoute)
 
 router.get('/', (req, res) => {
   res.status(200).json('Hello World')

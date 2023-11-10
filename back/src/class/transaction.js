@@ -12,6 +12,12 @@ class Transaction {
 
     Transaction.transactions.push(this)
   }
+
+  getUserTransactionById(user, id) {
+    return user.transactions.find(
+      (id) => user.transaction.id === id,
+    )
+  }
 }
 
 module.exports = Transaction

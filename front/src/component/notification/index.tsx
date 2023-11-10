@@ -1,7 +1,7 @@
 import "./index.css";
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatTimestamp } from "../Utils";
+import { formatTimeAgo } from "../Utils";
 
 type NotificationProps = {
   notification: {
@@ -15,13 +15,13 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
   const { message, type, time } = notification;
   console.log("time", time);
 
-  const timeAgo: string = formatTimestamp(time);
+  const timeAgo: string = formatTimeAgo(time);
 
   let logo = "";
   if (type === "Announcement") {
-    logo = "./svg/S.svg";
+    logo = "./svg/bell-black.svg";
   } else if (type === "Warning") {
-    logo = "./svg/C.svg";
+    logo = "./svg/alert-red.svg";
   } else {
     logo = "./svg/user.svg";
   }
@@ -33,14 +33,17 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
   // const date2 = `${hours}:${minutes}`;
 
   return (
-    <div className="transaction">
-      <div className="transaction__info">
-        <img className="transaction__img" src={logo} alt="Agent logo" />
-        <div className="transaction__data">
-          <div className="transaction__agent-name">{message}</div>
-          <div className="transaction__details">
-            <div className="transaction__time">{timeAgo}</div>
-            <div className="transaction__type">{type}</div>
+    <div className="notification">
+      <div className="notification__info">
+        <img className="notification__img" src={logo} alt="Agent logo" />
+        <div className="notification__data">
+          <div className="notification__name">{message}</div>
+          <div className="notification__details">
+            <div className="notification__time">{timeAgo}</div>
+            <div className="notification__divider">
+              <img src="./svg/point.svg" alt="." />
+            </div>
+            <div className="notification__type">{type}</div>
           </div>
         </div>
       </div>
