@@ -37,6 +37,12 @@ export const validatePassword = (password: string) => {
   return password.length >= minLength && hasUppercase && hasSpecialChar;
 };
 
+export const validateMoneyAmount = (input: string): boolean => {
+  // Regular expression to match a valid money amount
+  const moneyRegex = /^\$?[0-9]+(\.[0-9][0-9])?$/;
+  return moneyRegex.test(input);
+};
+
 class AmountSplitter {
   static splitAmount(amount: number) {
     const dollars = Math.floor(amount);
@@ -112,6 +118,7 @@ export default {
   getUserDataFromLocalStorage,
   validateEmail,
   validatePassword,
+  validateMoneyAmount,
   AmountSplitter,
   formatTimestamp,
   formatTimeAgo,
