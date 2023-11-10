@@ -13,6 +13,7 @@ import BalancePage from "./page/BalancePage";
 import SettingsPage from "./page/SettingsPage";
 import NotificationsPage from "./page/NotificationsPage";
 import TransactionPage from "./page/TransactionPage";
+import SendPage from "./page/SendPage";
 import {
   AuthContext,
   authReducer,
@@ -30,22 +31,6 @@ const RecivePage: React.FC = () => {
     </div>
   );
 };
-const SendPage: React.FC = () => {
-  //
-  // {/* /Користувач вводить пошту та суму. Після чого у користувача, який відправив суму, створюється транзакція на списання грошей на нотифікацію, а у користувача, який отримав гроші, створюється транзакція на отримання грошей та нотифікацію */}
-  return (
-    <div>
-      <h1>SendPage</h1>
-    </div>
-  );
-};
-// const TransactionPage: React.FC = () => {
-//   return (
-//     <div>
-//       <h1>TransactionPage</h1>
-//     </div>
-//   );
-// };
 
 const Error: React.FC = () => {
   return <div className="App-header">Error Page</div>;
