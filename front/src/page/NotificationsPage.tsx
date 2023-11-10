@@ -80,7 +80,7 @@ const NotificationsPage: React.FC = () => {
       <Page>
         <StatusBar color="black" />
         <ArrowBackTitle title="Notifications" />
-        <div className="balance__transactions">
+        <div className="notifications">
           <ul>
             {notifications.map((notification, index) => (
               <li key={index}>

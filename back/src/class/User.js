@@ -37,6 +37,12 @@ class User {
     return User.users.find((user) => user.email === email)
   }
 
+  getUserTransactionById(id) {
+    return this.transactions.find(
+      (transaction) => transaction.id === id,
+    )
+  }
+
   static existingUser = (email) =>
     User.getUserByEmail(email)
 }

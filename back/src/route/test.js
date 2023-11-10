@@ -13,17 +13,18 @@ function TestData() {
   console.log('Created user:', bob)
   bob.balance = 1222.35
   console.log('Credit bob $1222.35')
+
   bob.notifications.push(
     new Notification('New reward system', 'Announcement'),
   )
   bob.notifications.push(
-    new Notification('New login', 'Werning'),
+    new Notification('New login', 'Warning'),
   )
   bob.notifications.push(
     new Notification('New reward system', 'Announcement'),
   )
   bob.notifications.push(
-    new Notification('New login', 'Announcement'),
+    new Notification('New login', 'Warning'),
   )
   console.log(bob.notifications)
 

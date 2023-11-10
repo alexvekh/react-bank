@@ -5,53 +5,54 @@
   cursor: pointer;
 }
 
-.transaction {
+.notification {
   display: flex;
   width: 353px;
   justify-content: space-between;
   align-items: center;
 
   gap: 12px;
-  background-color: white;
-  padding: 6px;
+  border-radius: 12px;
+  background: #FFF;
+  padding: 12px;
 } 
 
-.transaction__info {
+.notification__info {
   display: flex;
   flex-direction: row;
   gap: 12px;
   align-items: center;
 }
 
-.transaction__img {
-  width: 18px;
-height: 18px;
-flex-shrink: 0;
-display: flex;
-width: 48px;
-height: 48px;
-padding: 15px;
-justify-content: center;
-align-items: center;
-border-radius: 100px;
-background: var(--BG-2, #F7F7F7);
+.notification__img {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 83.333px;
+  background: var(--BG-2, #F7F7F7);
 }
 
-.transaction__data {
+.notification__data {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
 }
 
-.transaction__details {
+.notification__details {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
 }
 
-.transaction__agent-name {
+.notification__name {
   color: var(--Black, #1D1D1F);
   text-align: center;
   font-family: Jost;
@@ -61,7 +62,7 @@ background: var(--BG-2, #F7F7F7);
   line-height: 100%;
 }
 
-.transaction__time {
+.notification__time {
   color: var(--Grey-text, #939199);
 text-align: center;
 font-family: Jost;
@@ -71,7 +72,14 @@ font-weight: 400;
 line-height: 100%;
 }
 
-.transaction__type {
+.notification__divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.notification__type {
   color: var(--Grey-text, #939199);
 text-align: center;
 font-family: Jost;
@@ -81,42 +89,3 @@ font-weight: 400;
 line-height: 100%;
 }
 
-.transaction__amount {
-  color: var(--Green, #24B277);
-  text-align: center;
-  font-family: Jost;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 100%
-}
-
-.cents {
-  font-weight: 400;
-  color: var(--Grey-text, #939199);
-}
-
-
-
-.plus {
-  color: var(--Green, #24B277);
-}
-
-.plus::before {
-  content: "+$";
-  color: var(--Green, #24B277);
-}
-
-.plus span:last-child {
-  color: var(--Green, #24B277);
-}
-
-.minus {
-  color: var(--Black, #1D1D1F);
-}
-
-.minus::before {
-  content: "-$";
-  color: var(--Black, #1D1D1F);
-
-}

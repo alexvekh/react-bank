@@ -12,6 +12,7 @@ import RecoveryConfirmPage from "./page/RecoveryConfirmPage";
 import BalancePage from "./page/BalancePage";
 import SettingsPage from "./page/SettingsPage";
 import NotificationsPage from "./page/NotificationsPage";
+import TransactionPage from "./page/TransactionPage";
 import {
   AuthContext,
   authReducer,
@@ -38,13 +39,13 @@ const SendPage: React.FC = () => {
     </div>
   );
 };
-const TransactionPage: React.FC = () => {
-  return (
-    <div>
-      <h1>TransactionPage</h1>
-    </div>
-  );
-};
+// const TransactionPage: React.FC = () => {
+//   return (
+//     <div>
+//       <h1>TransactionPage</h1>
+//     </div>
+//   );
+// };
 
 const Error: React.FC = () => {
   return <div className="App-header">Error Page</div>;
@@ -150,15 +151,9 @@ function App() {
           <Route
             path="/transaction/:transactionId"
             element={
-              //<PrivateRoute>
-              <TransactionPage />
-              //Сторінка з детальною інформацією про конкретну транзакцію. В
-              //сторінці є trainsactionId, який вказує на ідентифікатор
-              //транзакції, який використовується для отримання та виводи
-              //інформації про конкретну транзакцію. Перехід на цю сторінку
-              //здійснюється через натискання на карточку транзакції на
-              //сторінці  /balance
-              //</Routes></PrivateRoute>
+              <PrivateRoute>
+                <TransactionPage />
+              </PrivateRoute>
             }
           />
           <Route path="*" Component={Error} />

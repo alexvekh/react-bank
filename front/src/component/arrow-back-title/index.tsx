@@ -15,7 +15,7 @@ const ArrowBackTitle: React.FC<TitleProps> = ({ title }) => {
   return (
     <div className="arrow-title">
       <button onClick={handleNavigate}>
-        <img src="./svg/back.svg" alt="Status bare" className="arrow-back" />
+        <img src="./../svg/back.svg" alt="Status bare" className="arrow-back" />
       </button>
       <h1 className="page__title">{title}</h1>
       <div className="arrow-title__space"></div>
