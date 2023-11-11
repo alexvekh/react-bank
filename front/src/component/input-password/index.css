@@ -25,6 +25,7 @@
   margin-top: 8px;
   border-radius: 12px;
   color: black;
+  background: white;
   border: 1px solid var(--Grey-Border, #E9E8EB);
 }
 

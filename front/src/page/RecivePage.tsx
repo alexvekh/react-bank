@@ -11,20 +11,47 @@ import { useAuth } from "../container/AuthContext";
 import ArrowBackTitle from "../component/arrow-back-title";
 import { validateEmail, validateMoneyAmount } from "../component/Utils";
 import InputAmount from "../component/input-amount";
+import PaymentSystem from "../component/payment-system";
 
-// {/* /Користувач вводить пошту та суму.
-//Після чого у користувача, який відправив суму,
-//створюється транзакція на списання грошей на нотифікацію,
-//а у користувача, який отримав гроші,
-//створюється транзакція на отримання грошей та нотифікацію */}
+//Сторінка поповнення балансу. Користувач вводить суму, натискає
+//на платіжний метод і відправляється запит. Після чого
+//створюється нова транзакція та нова нотифікація
+type PaySystem = {
+  correspondent: string;
+  methods: string[];
+};
 
-const SendPage: React.FC = () => {
+const RecivePage: React.FC = () => {
   const [reciverEmail, setReceiverEmail] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [isEmailValid, setEmailIsValid] = useState(true);
   const [isAmountValid, setAmountIsValid] = useState(true);
   const [alert, setAlert] = useState<string>("");
   const { state, dispatch } = useAuth();
+
+  const stripe: PaySystem = {
+    correspondent: "Stripe",
+    methods: [
+      "./../svg/pay-visa.svg",
+      "./../svg/pay-thron.svg",
+      "./../svg/pay-bitcoin.svg",
+      "./../svg/pay-redthron.svg",
+      "./../svg/pay-etherium.svg",
+      "./../svg/pay-bnb.svg",
+    ],
+  };
+
+  const coinbase: PaySystem = {
+    correspondent: "Coinbase",
+    methods: [
+      "./../svg/pay-thron.svg",
+      "./../svg/pay-visa.svg",
+      "./../svg/pay-redthron.svg",
+      "./../svg/pay-bitcoin.svg",
+      "./../svg/pay-bnb.svg",
+      "./../svg/pay-etherium.svg",
+    ],
+  };
 
   const senderEmail = state.email;
 
@@ -94,24 +121,12 @@ const SendPage: React.FC = () => {
     <body style={{ backgroundColor: "var(--Grey-BG, #F5F5F7)" }}>
       <Page>
         <StatusBar color="black" />
-        <ArrowBackTitle title="Send" />
+        <ArrowBackTitle title="Receive" />
 
         <div className="inputs">
           <form className="form" onSubmit={handleSubmit}>
-            <Input
-              label="Email"
-              labelClassName={isEmailValid ? "input" : "input--error"}
-              borderClassName={
-                isEmailValid ? "input__field" : "input__field--error"
-              }
-              name={"email"}
-              type="text"
-              value={reciverEmail}
-              onChange={handleEmailChange}
-              notice={isEmailValid ? "" : "Amount is not valid"}
-            />
             <InputAmount
-              label="Sum"
+              label="Receive amount"
               labelClassName={isAmountValid ? "input" : "input--error"}
               borderClassName={
                 isAmountValid ? "input__field" : "input__field--error"
@@ -122,10 +137,14 @@ const SendPage: React.FC = () => {
               onChange={handleMoneyAmountChange}
               notice={isAmountValid ? "" : "Amount is not valid"}
             />
+            <div></div>
 
-            <button className="button button-primary" type="submit">
-              Send
-            </button>
+            <div>Payment system</div>
+
+            <PaymentSystem paySystem={stripe} />
+
+            <PaymentSystem paySystem={coinbase} />
+
             {alert ? <Alert status="yellow" text={alert} /> : null}
           </form>
         </div>
@@ -134,4 +153,4 @@ const SendPage: React.FC = () => {
   );
 };
 
-export default SendPage;
+export default RecivePage;

@@ -14,23 +14,13 @@ import SettingsPage from "./page/SettingsPage";
 import NotificationsPage from "./page/NotificationsPage";
 import TransactionPage from "./page/TransactionPage";
 import SendPage from "./page/SendPage";
+import RecivePage from "./page/RecivePage";
 import {
   AuthContext,
   authReducer,
   initialAuthState,
 } from "./container/AuthContext";
 //import { AuthProvider } from "./container/AuthProvider";
-
-const RecivePage: React.FC = () => {
-  //Сторінка поповнення балансу. Користувач вводить суму, натискає
-  //на платіжний метод і відправляється запит. Після чого
-  //створюється нова транзакція та нова нотифікація
-  return (
-    <div>
-      <h1>RecivePage</h1>
-    </div>
-  );
-};
 
 const Error: React.FC = () => {
   return <div className="App-header">Error Page</div>;
