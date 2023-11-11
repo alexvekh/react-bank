@@ -49,8 +49,7 @@ const BalancePage: React.FC = () => {
           console.log("Data fetched:", data);
           setBalance(data.user.balance);
           console.log(data.user.transactions);
-          //transactions = data.user.transactions;
-          setTransactions(data.user.transactions); // All the time tefreshing back-end
+          setTransactions(data.user.transactions);
         });
     } catch (error) {
       console.error("An error occurred:", error);
@@ -102,7 +101,7 @@ const BalancePage: React.FC = () => {
 
       <div className="balance__transactions">
         <ul>
-          {transactions.map((transaction) => (
+          {transactions.reverse().map((transaction) => (
             <li key={transaction.id}>
               <TransactionItem transaction={transaction} />
             </li>
