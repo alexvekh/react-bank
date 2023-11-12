@@ -11,6 +11,7 @@ function TestData() {
 
   const bob = new User('email@example.com', 'pasSw@rd123')
   console.log('Created user:', bob)
+
   bob.balance = 1222.35
   console.log('Credit bob $1222.35')
 

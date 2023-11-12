@@ -1,15 +1,11 @@
 import React, { useState, ChangeEvent } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import StatusBar from "../component/status-bar/index";
-import ArrowBack from "../component/arrow-back/index";
 import Alert from "../component/alert/index";
 import Page from "../component/page/index";
-import Title from "../component/title/index";
-import Input from "../component/input/index";
-import InputPassword from "../component/input-password/index";
 import { useAuth } from "../container/AuthContext";
 import ArrowBackTitle from "../component/arrow-back-title";
-import { validateEmail, validateMoneyAmount } from "../component/Utils";
+import { validateMoneyAmount } from "../component/Utils";
 import InputAmount from "../component/input-amount";
 import PaymentSystem from "../component/payment-system";
 
@@ -22,9 +18,8 @@ type PaySystem = {
 };
 
 const RecivePage: React.FC = () => {
-  const [reciverEmail, setReceiverEmail] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
-  const [isEmailValid, setEmailIsValid] = useState(true);
+  const [paySystem, setPaySystem] = useState("");
   const [isAmountValid, setAmountIsValid] = useState(true);
   const [alert, setAlert] = useState<string>("");
   const { state, dispatch } = useAuth();
@@ -40,7 +35,6 @@ const RecivePage: React.FC = () => {
       "./../svg/pay-bnb.svg",
     ],
   };
-
   const coinbase: PaySystem = {
     correspondent: "Coinbase",
     methods: [
@@ -53,13 +47,7 @@ const RecivePage: React.FC = () => {
     ],
   };
 
-  const senderEmail = state.email;
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newEmail: string = e.target.value;
-    setReceiverEmail(newEmail);
-    setEmailIsValid(validateEmail(newEmail));
-  };
+  const receiverEmail = state.email;
 
   const handleMoneyAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const newAmount: string = e.target.value;
@@ -70,43 +58,46 @@ const RecivePage: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const handleStripeClick = () => {};
+
+  const handleCoinbaseClick = () => {};
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmailIsValid(validateEmail(reciverEmail));
+    const target = e.nativeEvent.target as HTMLButtonElement;
+    if (target.id === "stripe") {
+      setPaySystem("Stripe");
+    } else {
+      setPaySystem("Coinbase");
+    }
+    console.log("paySystem", paySystem);
 
-    if (!reciverEmail && !amount) {
-      setAlert("Enter email and amount!");
-    } else if (!reciverEmail) {
-      setAlert("Enter email!");
-    } else if (!amount) {
+    if (!amount) {
       setAlert("Enter amount!");
-    } else if (!isEmailValid) {
-      setAlert("Enter e valid email!");
+    } else if (!paySystem) {
+      setAlert("Choise payment method!");
     } else if (!isAmountValid) {
       setAlert("Enter a valid amount");
     } else {
       try {
-        const response = await fetch("http://localhost:4000/send", {
+        const response = await fetch("http://localhost:4000/recive", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ senderEmail, reciverEmail, amount }),
+          body: JSON.stringify({ paySystem, receiverEmail, amount }),
         });
 
         if (response.status === 409) {
-          // Handle the case where the email already exists
           const responseData = await response.json();
-          console.log(responseData.error);
           console.error(responseData.error);
-          setAlert(responseData.error);
         }
 
         if (response.ok) {
           // Registration successful, you can navigate to the next page
           const responseData = await response.json(); // Parse the JSON response
           console.log("Response Data:", responseData);
-          navigate("/balance");
+          navigate("/notifications");
         } else {
           // Handle registration errors
           console.error("Registration failed");
@@ -140,10 +131,13 @@ const RecivePage: React.FC = () => {
             <div></div>
 
             <div>Payment system</div>
-
-            <PaymentSystem paySystem={stripe} />
-
-            <PaymentSystem paySystem={coinbase} />
+            <button id="stripe" type="submit" onClick={handleStripeClick}>
+              {" "}
+              <PaymentSystem paySystem={stripe} />
+            </button>
+            <button id="coinbase" type="submit" onClick={handleCoinbaseClick}>
+              <PaymentSystem paySystem={coinbase} />{" "}
+            </button>
 
             {alert ? <Alert status="yellow" text={alert} /> : null}
           </form>
