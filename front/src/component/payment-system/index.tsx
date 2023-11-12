@@ -25,21 +25,21 @@ const PaymentSystem: React.FC<PaymentSystemProps> = ({ paySystem }) => {
   }
 
   return (
-    <Link className="payment-link" to={`/recive/${correspondent}`}>
-      <div className="payment-system">
-        <div className="payment__info">
-          <img className="transaction__img" src={logo} alt="Agent logo" />
-          <div className="transaction__agent"> {correspondent} </div>
-        </div>
-        <ul className="pay-methods">
-          {methods.map((method, index) => (
-            <li key={index}>
-              <img src={method} />
-            </li>
-          ))}
-        </ul>
+    // <Link className="payment-link" to={`/recive/${correspondent}`}>
+    <div className="payment-system">
+      <div className="payment__info">
+        <img className="transaction__img" src={logo} alt="Agent logo" />
+        <div className="transaction__agent"> {correspondent} </div>
       </div>
-    </Link>
+      <ul className="pay-methods">
+        {methods.map((method, index) => (
+          <li key={index}>
+            <img src={method} />
+          </li>
+        ))}
+      </ul>
+    </div>
+    // </Link>
   );
 };
 
