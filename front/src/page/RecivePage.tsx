@@ -51,7 +51,6 @@ const RecivePage: React.FC = () => {
 
   const handleMoneyAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const newAmount: string = e.target.value;
-    //const amountAsNumber: number = parseFloat(newAmount);
     setAmount(newAmount);
     setAmountIsValid(validateMoneyAmount(newAmount) || newAmount === "");
   };
@@ -68,7 +67,6 @@ const RecivePage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("paySystem", paySystem);
 
     if (!amount) {
       setAlert("Enter amount!");
@@ -88,17 +86,18 @@ const RecivePage: React.FC = () => {
 
         if (response.status === 409) {
           const responseData = await response.json();
-          console.error(responseData.error);
+          setAlert(responseData.error);
         }
 
         if (response.ok) {
           // Registration successful, you can navigate to the next page
           const responseData = await response.json(); // Parse the JSON response
           console.log("Response Data:", responseData);
+          setAlert(responseData.message);
           navigate("/balance");
         } else {
           // Handle registration errors
-          console.error("Registration failed");
+          console.error("Receiving failed");
         }
       } catch (error) {
         console.error("An error occurred:", error);

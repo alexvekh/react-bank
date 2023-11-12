@@ -1,10 +1,9 @@
-// Підключаємо роутер до бек-енду
-
 const User = require('../class/user')
 const TransactionHandler = require('../class/transactionHandler')
 const Notification = require('../class/notification')
 
-//  ===========
+//  creating users and transactions for testing
+
 function TestData() {
   const nick = new User('nick@mail.com', 'Password@1')
 

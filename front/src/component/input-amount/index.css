@@ -12,8 +12,8 @@
   display: flex;
   padding: 18px 16px;
   align-items: flex-start;
-  gap: 12px;
-  font-family: Jost;
+  gap: 16px;
+  font-family: Inherit;
   font-size: 14px;
   align-self: stretch;
   width: 353px;

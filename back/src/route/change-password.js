@@ -6,24 +6,13 @@ const User = require('../class/user')
 const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
-  console.log('settings req.body', req.body)
   const { userEmail, oldPassword, newPassword } = req.body
 
-  console.log(
-    'userEmail, oldPassword, newPassword: ',
-    userEmail,
-    oldPassword,
-    newPassword,
-  )
-
   if (!userEmail || !oldPassword || !newPassword) {
-    console.log('!email || !password')
     return res
       .status(400)
       .json({ error: 'Email and password are required' })
   } else {
-    console.log(' userEmail, oldPassword, newPassword OK ')
-
     const user = User.getUserByEmail(userEmail)
 
     if (!user) {
@@ -59,5 +48,4 @@ router.post('/', (req, res) => {
   }
 })
 
-// Експортуємо глобальний роутер
 module.exports = router

@@ -11,7 +11,6 @@ router.post('/', (req, res) => {
 
   // if no paramenters
   if (!senderEmail || !reciverEmail || !amount) {
-    console.log('!senderEmail || !reciverEmail || !amount')
     return res.status(400).json({
       error: 'Email and transaction amount are required',
     })
@@ -19,7 +18,6 @@ router.post('/', (req, res) => {
 
   // if no user in the system
   if (!User.existingUser(reciverEmail)) {
-    console.log(`user with email ${reciverEmail} not found`)
     return res.status(409).json({
       error: `A user with email ${reciverEmail} not found`,
     })
@@ -28,32 +26,22 @@ router.post('/', (req, res) => {
   // parse to Float
   const transactionAmount = parseFloat(amount)
   const sender = User.getUserByEmail(senderEmail)
-  console.log('sender', sender)
-  console.log('sender.balance', sender.balance)
 
   if (sender.balance < transactionAmount) {
-    console.log('not enough funds')
     return res.status(409).json({
-      error: 'You do not have enough funds on this acount',
+      error: 'Not enough funds on your acount',
     })
   }
-
+  // make transaction
   try {
     TransactionHandler.processTransaction(
       senderEmail,
       reciverEmail,
       transactionAmount,
     )
-    console.log('TRANSACTED')
 
     res.status(201).json({
       message: `${amount} has sent to ${reciverEmail}`,
-      // user: {
-      //   isLogged: user.isLogged,
-      //   isConfirmed: user.isConfirmed,
-      //   email: user.email,
-      //   token: user.token,
-      // },
     })
   } catch (error) {
     console.log(error)

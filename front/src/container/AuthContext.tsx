@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, Dispatch } from "react";
+import { createContext, useContext, Dispatch } from "react";
 
 //Створюємо контекст, в якому будемо тримати дані аутентифікації
 //В контексті буде знаходитись: створений state через useReducer, який буде
@@ -24,21 +24,22 @@ type AuthAction =
     }
   | { type: "LOGOUT" };
 
-// export const initialAuthState: AuthState = {
-//   isLogged: false,
-//   isConfirmed: false,
-//   token: null,
-//   email: null,
-// };
-
 export const initialAuthState: AuthState = {
-  isLogged: true,
-  isConfirmed: true,
-  token: "Q&FdPDvByVne",
-  email: "bob@mail.com",
+  isLogged: false,
+  isConfirmed: false,
+  token: null,
+  email: null,
 };
 
-// Get from local storage
+// ==============   Keepin login in For testsing private pages
+// export const initialAuthState: AuthState = {
+//   isLogged: true,
+//   isConfirmed: true,
+//   token: "Q&FdPDvByVne",
+//   email: "bob@mail.com",
+// };
+
+// ==============    Get from local storage
 // export const initialAuthState: AuthState = {
 //   isLogged: localStorage.getItem("bankUserIsLogged") === "true" || false,
 //   isConfirmed: localStorage.getItem("bankUserIsConfirmed") === "true" || false,

@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StatusBar from "../component/status-bar/index";
 import ArrowBackTitle from "../component/arrow-back-title/index";
 import Alert from "../component/alert/index";
@@ -10,9 +10,9 @@ import { useAuth } from "../container/AuthContext";
 import { validateEmail } from "../component/Utils";
 import { validatePassword } from "../component/Utils";
 
-//Сторінка налаштувань, на якій можна: Змінити пароль Змінити
-//пошту Вийти з акаунту Кожна дія повинна в кінці оновлювати
-//контекст аутентифікації
+// Сторінка налаштувань, на якій можна: Змінити пароль Змінити
+// пошту Вийти з акаунту Кожна дія повинна в кінці оновлювати
+// контекст аутентифікації
 
 const SettingsPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -60,40 +60,43 @@ const SettingsPage: React.FC = () => {
     setEmailIsValid(validateEmail(email));
     setPasswordIsValid(validatePassword(password));
 
-    try {
-      const response = await fetch("http://localhost:4000/change-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userEmail, newEmail: email, password }),
-      });
+    if (!email && !password) {
+      setAlertEmailChange("Enter email and password!");
+    } else if (!email) {
+      setAlertEmailChange("Enter email!");
+    } else if (!password) {
+      setAlertEmailChange("Enter password!");
+    } else if (!isEmailValid) {
+      setAlertEmailChange("Enter e valid email!");
+    } else if (!isPasswordValid) {
+      setAlertEmailChange("Minimum 8 symbols, 1 UpperCase, 1 special");
+    } else {
+      try {
+        const response = await fetch("http://localhost:4000/change-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userEmail, newEmail: email, password }),
+        });
 
-      if (response.status === 409) {
-        const responseData = await response.json();
-        console.log(responseData.error);
-        console.error(responseData.error);
-        setAlertEmailChange(responseData.error);
+        if (response.status === 409) {
+          const responseData = await response.json();
+          setAlertEmailChange(responseData.error);
+        }
+
+        if (response.ok) {
+          const responseData = await response.json();
+          const user = responseData.user;
+          dispatch({ type: "LOGIN", payload: user });
+          dispatch({ type: "LOGOUT" });
+          navigate("/signup-confirm");
+        } else {
+          setAlertEmailChange("Changing failed");
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
-
-      if (response.ok) {
-        const responseData = await response.json(); // Parse the JSON response
-        console.log("Response Data:", responseData);
-        const user = responseData.user;
-        console.log("user:", user);
-        dispatch({ type: "LOGIN", payload: user });
-        dispatch({ type: "LOGOUT" });
-
-        // LocalStorage
-        // setUserDataInLocalStorage(user);
-
-        navigate("/signup-confirm");
-      } else {
-        // Handle registration errors
-        console.error("Registration failed");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
     }
   };
 
@@ -101,44 +104,57 @@ const SettingsPage: React.FC = () => {
     e.preventDefault();
     setOldPasswordIsValid(validatePassword(oldPassword));
     setNewPasswordIsValid(validatePassword(newPassword));
-    try {
-      const response = await fetch("http://localhost:4000/change-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userEmail, oldPassword, newPassword }),
-      });
 
-      if (response.status === 409) {
-        // Handle the case where the email already exists
-        const responseData = await response.json();
-        console.log(responseData.error);
-        console.error(responseData.error);
-        setAlertPasswordChange(responseData.error);
+    if (!oldPassword && !oldPassword) {
+      setAlertPasswordChange("Enter your old and new passwords!");
+    } else if (!oldPassword) {
+      setAlertPasswordChange("Enter your old password!");
+    } else if (!newPassword) {
+      setAlertPasswordChange("Enter new password!");
+    } else if (!isOldPasswordValid) {
+      setAlertPasswordChange("Old password is wrong!");
+    } else if (!isNewPasswordValid) {
+      setAlertPasswordChange("Minimum 8 symbols, 1 UpperCase, 1 special");
+    } else {
+      try {
+        const response = await fetch("http://localhost:4000/change-password", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userEmail, oldPassword, newPassword }),
+        });
+
+        if (response.status === 409) {
+          // Handle the case where the email already exists
+          const responseData = await response.json();
+          console.log(responseData.error);
+          console.error(responseData.error);
+          setAlertPasswordChange(responseData.error);
+        }
+
+        if (response.ok) {
+          // Registration successful, you can navigate to the next page
+          const responseData = await response.json(); // Parse the JSON response
+          console.log("Response Data:", responseData);
+
+          const user = responseData.user;
+          console.log("user:", user);
+
+          dispatch({ type: "LOGIN", payload: user });
+          dispatch({ type: "LOGOUT" });
+
+          // LocalStorage
+          // setUserDataInLocalStorage(user);
+
+          navigate("/signup-confirm");
+        } else {
+          // Handle registration errors
+          console.error("Registration failed");
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
-
-      if (response.ok) {
-        // Registration successful, you can navigate to the next page
-        const responseData = await response.json(); // Parse the JSON response
-        console.log("Response Data:", responseData);
-
-        const user = responseData.user;
-        console.log("user:", user);
-
-        dispatch({ type: "LOGIN", payload: user });
-        dispatch({ type: "LOGOUT" });
-
-        // LocalStorage
-        // setUserDataInLocalStorage(user);
-
-        navigate("/signup-confirm");
-      } else {
-        // Handle registration errors
-        console.error("Registration failed");
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
     }
   };
 

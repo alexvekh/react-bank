@@ -76,13 +76,12 @@ const SendPage: React.FC = () => {
         }
 
         if (response.ok) {
-          // Registration successful, you can navigate to the next page
-          const responseData = await response.json(); // Parse the JSON response
+          const responseData = await response.json();
           console.log("Response Data:", responseData);
+          setAlert(responseData.message);
           navigate("/balance");
         } else {
-          // Handle registration errors
-          console.error("Registration failed");
+          console.error("Transaction failed");
         }
       } catch (error) {
         console.error("An error occurred:", error);
