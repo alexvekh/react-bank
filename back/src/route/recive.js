@@ -3,7 +3,6 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../class/user')
-const TransactionHandler = require('../class/transactionHandler')
 const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
@@ -39,21 +38,23 @@ router.post('/', (req, res) => {
 
   user.notifications.push(
     new Notification(
-      `You received $${transactionAmount} from ${paySystem}`,
+      `$${transactionAmount} received from ${paySystem}`,
       'Announcement',
     ),
   )
+
+  user.transactions.push({
+    id: user.transactions.length + 1,
+    correspondent: paySystem,
+    timestamp: new Date(),
+    type: 'Receipt',
+    amount: transactionAmount,
+  })
+
   console.log('user.balance', user.balance)
-  console.log('TRANSACTED', user)
 
   res.status(201).json({
     message: `${amount} was received from ${paySystem}`,
-    // user: {
-    //   isLogged: user.isLogged,
-    //   isConfirmed: user.isConfirmed,
-    //   email: user.email,
-    //   token: user.token,
-    // },
   })
 })
 

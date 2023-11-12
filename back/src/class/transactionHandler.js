@@ -1,5 +1,6 @@
 const User = require('./user')
 const Transaction = require('./transaction')
+const Notification = require('./notification')
 
 class TransactionHandler {
   static processTransaction(
@@ -30,6 +31,13 @@ class TransactionHandler {
           type: 'Sending',
           amount,
         })
+        senderUser.notifications.push(
+          new Notification(
+            `$${amount} sent to ${receiverEmail}`,
+            'Announcement',
+          ),
+        )
+
         console.log(
           'senderUser.transactions: ',
           senderUser.transactions,
@@ -42,6 +50,14 @@ class TransactionHandler {
           type: 'Receipt',
           amount,
         })
+
+        receiverUser.notifications.push(
+          new Notification(
+            `${senderEmail} sent to you $${amount}`,
+            'Announcement',
+          ),
+        )
+
         console.log(
           'receiverUser.transactions: ',
           receiverUser.transactions,

@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../class/user')
+const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
   console.log('req.body', req.body)
@@ -25,6 +26,10 @@ router.post('/', (req, res) => {
   } else {
     console.log('Good code')
     user.isConfirmed = true
+
+    user.notifications.push(
+      new Notification('Account confirmed', 'Warning'),
+    )
     console.log('user.isConfirmed', user)
 
     return res.status(201).json({

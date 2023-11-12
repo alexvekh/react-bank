@@ -82,7 +82,7 @@ const NotificationsPage: React.FC = () => {
         <ArrowBackTitle title="Notifications" />
         <div className="notifications">
           <ul>
-            {notifications.map((notification, index) => (
+            {notifications.reverse().map((notification, index) => (
               <li key={index}>
                 <Notification notification={notification} />
               </li>

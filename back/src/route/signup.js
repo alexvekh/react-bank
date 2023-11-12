@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../class/user')
+const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
   console.log('1 pass', req.body)
@@ -39,6 +40,11 @@ router.post('/', (req, res) => {
     } else {
       console.log('user no exist')
       const user = new User(email, password)
+
+      user.notifications.push(
+        new Notification('Created account', 'Announcement'),
+      )
+
       console.log('Created new user', user)
 
       res.status(201).json({

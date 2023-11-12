@@ -39,7 +39,7 @@ export const validatePassword = (password: string) => {
 
 export const validateMoneyAmount = (input: string): boolean => {
   // Regular expression to match a valid money amount
-  const moneyRegex = /^\$?[0-9]+(\.[0-9][0-9])?$/;
+  const moneyRegex = /^\$?[0-9]+(\.\d{1,2})?$/;
   return moneyRegex.test(input);
 };
 

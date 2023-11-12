@@ -12,8 +12,8 @@ import PaymentSystem from "../component/payment-system";
 //Сторінка поповнення балансу. Користувач вводить суму, натискає
 //на платіжний метод і відправляється запит. Після чого
 //створюється нова транзакція та нова нотифікація
-type PaySystem = {
-  correspondent: string;
+type PaymentSystem = {
+  system: string;
   methods: string[];
 };
 
@@ -24,8 +24,8 @@ const RecivePage: React.FC = () => {
   const [alert, setAlert] = useState<string>("");
   const { state, dispatch } = useAuth();
 
-  const stripe: PaySystem = {
-    correspondent: "Stripe",
+  const stripe: PaymentSystem = {
+    system: "Stripe",
     methods: [
       "./../svg/pay-visa.svg",
       "./../svg/pay-thron.svg",
@@ -35,8 +35,8 @@ const RecivePage: React.FC = () => {
       "./../svg/pay-bnb.svg",
     ],
   };
-  const coinbase: PaySystem = {
-    correspondent: "Coinbase",
+  const coinbase: PaymentSystem = {
+    system: "Coinbase",
     methods: [
       "./../svg/pay-thron.svg",
       "./../svg/pay-visa.svg",
@@ -53,23 +53,21 @@ const RecivePage: React.FC = () => {
     const newAmount: string = e.target.value;
     //const amountAsNumber: number = parseFloat(newAmount);
     setAmount(newAmount);
-    setAmountIsValid(validateMoneyAmount(newAmount));
+    setAmountIsValid(validateMoneyAmount(newAmount) || newAmount === "");
   };
 
   const navigate = useNavigate();
 
-  const handleStripeClick = () => {};
+  const handleStripeClick = () => {
+    setPaySystem("Stripe");
+  };
 
-  const handleCoinbaseClick = () => {};
+  const handleCoinbaseClick = () => {
+    setPaySystem("Coinbase");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const target = e.nativeEvent.target as HTMLButtonElement;
-    if (target.id === "stripe") {
-      setPaySystem("Stripe");
-    } else {
-      setPaySystem("Coinbase");
-    }
     console.log("paySystem", paySystem);
 
     if (!amount) {
@@ -97,7 +95,7 @@ const RecivePage: React.FC = () => {
           // Registration successful, you can navigate to the next page
           const responseData = await response.json(); // Parse the JSON response
           console.log("Response Data:", responseData);
-          navigate("/notifications");
+          navigate("/balance");
         } else {
           // Handle registration errors
           console.error("Registration failed");
@@ -133,10 +131,10 @@ const RecivePage: React.FC = () => {
             <div>Payment system</div>
             <button id="stripe" type="submit" onClick={handleStripeClick}>
               {" "}
-              <PaymentSystem paySystem={stripe} />
+              <PaymentSystem paymentSystem={stripe} />
             </button>
             <button id="coinbase" type="submit" onClick={handleCoinbaseClick}>
-              <PaymentSystem paySystem={coinbase} />{" "}
+              <PaymentSystem paymentSystem={coinbase} />{" "}
             </button>
 
             {alert ? <Alert status="yellow" text={alert} /> : null}
