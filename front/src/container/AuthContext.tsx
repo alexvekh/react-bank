@@ -34,8 +34,8 @@ type AuthAction =
 export const initialAuthState: AuthState = {
   isLogged: true,
   isConfirmed: true,
-  token: "d0EBy%knT%mo",
-  email: "email@example.com",
+  token: "Q&FdPDvByVne",
+  email: "bob@mail.com",
 };
 
 // Get from local storage

@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../class/user')
+const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
   console.log('signin  req.body', req.body)
@@ -37,6 +38,10 @@ router.post('/', (req, res) => {
       })
     } else {
       user.password = password
+
+      user.notifications.push(
+        new Notification('Password recovered', 'Warning'),
+      )
       user.isConfirmed = true
       user.isLogged = false
       console.log('user with new password', user)

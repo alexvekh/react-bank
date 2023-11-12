@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../class/user')
+const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
   console.log('settings req.body', req.body)
@@ -44,6 +45,13 @@ router.post('/', (req, res) => {
       } else {
         console.log('Ok', user)
         user.email = newEmail
+        const Notification = require('../class/notification')
+        user.notifications.push(
+          new Notification(
+            'Your email was changed',
+            'Warning',
+          ),
+        )
         user.isLogged = false
         user.isConfirmed = false
         res.status(201).json({

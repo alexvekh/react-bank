@@ -4,6 +4,7 @@ const router = express.Router()
 
 const User = require('../class/user')
 const testData = require('./test')
+const Notification = require('../class/notification')
 
 router.post('/', (req, res) => {
   console.log('signin  req.body', req.body)
@@ -34,6 +35,10 @@ router.post('/', (req, res) => {
       })
     } else {
       user.isLogged = true
+
+      user.notifications.push(
+        new Notification('New login', 'Warning'),
+      )
       console.log('user.isLogged', user)
       //User.getUserByEmail(user.email).isLogged = true
       //console.log(User.getUserByEmail(user.email))

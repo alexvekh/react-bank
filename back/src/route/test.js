@@ -6,54 +6,54 @@ const Notification = require('../class/notification')
 
 //  ===========
 function TestData() {
-  const nick = new User('test1@mail.com', 'Password@1')
-  console.log('Created user:', nick)
+  const nick = new User('nick@mail.com', 'Password@1')
 
-  const bob = new User('email@example.com', 'pasSw@rd123')
-  console.log('Created user:', bob)
+  nick.notifications.push(
+    new Notification('Created account', 'Announcement'),
+  )
+
+  const bob = new User('bob@mail.com', 'pasSw@rd123')
 
   bob.balance = 1222.35
-  console.log('Credit bob $1222.35')
+
+  bob.notifications.push(
+    new Notification('Created account', 'Announcement'),
+  )
 
   bob.notifications.push(
     new Notification('New reward system', 'Announcement'),
   )
+
+  bob.balance = 1222.35
+
   bob.notifications.push(
-    new Notification('New login', 'Warning'),
+    new Notification('Deposited $122.35', 'Announcement'),
   )
-  bob.notifications.push(
-    new Notification('New reward system', 'Announcement'),
-  )
-  bob.notifications.push(
-    new Notification('New login', 'Warning'),
-  )
-  console.log(bob.notifications)
 
   //
 
   try {
     TransactionHandler.processTransaction(
-      'email@example.com',
-      'test1@mail.com',
+      'bob@mail.com',
+      'nick@mail.com',
       11.05,
     )
 
     TransactionHandler.processTransaction(
-      'email@example.com',
-      'test1@mail.com',
+      'bob@mail.com',
+      'nick@mail.com',
       22,
     )
 
     TransactionHandler.processTransaction(
-      'email@example.com',
-      'test1@mail.com',
+      'bob@mail.com',
+      'nick@mail.com',
       33.1,
     )
   } catch (error) {
     console.error(error)
   }
 
-  console.log('Created 3 transactions')
   console.log(User.users)
 }
 // Експортуємо глобальний роутер
