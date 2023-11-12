@@ -26,8 +26,6 @@ const BalancePage: React.FC = () => {
     AmountSplitter.splitAmount(balance);
 
   const [transactions, setTransactions] = useState<Transaction[]>([]); // All the time tefreshing back-end
-  //let transactions: Transaction[] = [];
-  console.log("transactions 3:", transactions);
 
   useEffect(() => {
     const url = `http://localhost:4000/balance?email=${userEmail}`;
@@ -48,7 +46,6 @@ const BalancePage: React.FC = () => {
         .then((data) => {
           console.log("Data fetched:", data);
           setBalance(data.user.balance);
-          console.log(data.user.transactions);
           setTransactions(data.user.transactions);
         });
     } catch (error) {

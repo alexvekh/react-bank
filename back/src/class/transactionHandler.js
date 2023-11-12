@@ -13,16 +13,7 @@ class TransactionHandler {
 
     if (senderUser && receiverUser) {
       if (senderUser.balance >= amount) {
-        console.log(
-          'balances',
-          senderUser.balance,
-          receiverUser.balance,
-        )
         new Transaction(senderEmail, receiverEmail, amount)
-        console.log(
-          'Transaction.transactions: ',
-          Transaction.transactions,
-        )
         senderUser.balance -= amount
         senderUser.transactions.push({
           id: senderUser.transactions.length + 1,
@@ -36,11 +27,6 @@ class TransactionHandler {
             `$${amount} sent to ${receiverEmail}`,
             'Announcement',
           ),
-        )
-
-        console.log(
-          'senderUser.transactions: ',
-          senderUser.transactions,
         )
         receiverUser.balance += amount
         receiverUser.transactions.push({
@@ -56,18 +42,6 @@ class TransactionHandler {
             `${senderEmail} sent to you $${amount}`,
             'Announcement',
           ),
-        )
-
-        console.log(
-          'receiverUser.transactions: ',
-          receiverUser.transactions,
-        )
-        // Create and push transaction objects here
-
-        console.log(
-          'balances',
-          senderUser.balance,
-          receiverUser.balance,
         )
       } else {
         throw new Error('Insufficient balance')

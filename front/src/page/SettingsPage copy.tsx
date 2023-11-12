@@ -14,7 +14,7 @@ import { validatePassword } from "../component/Utils";
 //пошту Вийти з акаунту Кожна дія повинна в кінці оновлювати
 //контекст аутентифікації
 
-const SettingsPage: React.FC = () => {
+const Settings2Page: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [oldPassword, setOldPassword] = useState<string>("");
@@ -191,4 +191,4 @@ const SettingsPage: React.FC = () => {
   );
 };
 
-export default SettingsPage;
+export default Settings2Page;

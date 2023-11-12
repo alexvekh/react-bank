@@ -19,8 +19,12 @@
   gap: 16px;
   align-self: stretch;
   width: 353px;
-  font-family: Jost;
+
+  font-family: Inherit;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
   align-self: stretch;
   margin-top: 8px;
   border-radius: 12px;
@@ -38,7 +42,11 @@
   padding: 16px;
   align-items: flex-start;
   gap: 16px;
+  font-family: Inherit;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
   align-self: stretch;
   width: 353px;
   margin-top: 8px;

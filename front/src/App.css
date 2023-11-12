@@ -158,6 +158,7 @@ body {
   align-items: flex-start;
   gap: 12px;
   align-self: stretch;
+  font-size: 14px;
 }
 .input-title {
   color: #000;
