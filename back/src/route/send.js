@@ -16,6 +16,13 @@ router.post('/', (req, res) => {
     })
   }
 
+  if (senderEmail === reciverEmail) {
+    return res.status(400).json({
+      error:
+        'Sorry, but no sense in transaction to youself',
+    })
+  }
+
   // if no user in the system
   if (!User.existingUser(reciverEmail)) {
     return res.status(409).json({

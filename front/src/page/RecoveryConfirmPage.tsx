@@ -81,9 +81,6 @@ const RecoveryConfirmPage: React.FC = () => {
 
           dispatch({ type: "LOGIN", payload: user });
 
-          // LocalStorage
-          // setUserDataInLocalStorage(user);
-
           navigate("/signup-confirm");
         } else {
           // Handle registration errors

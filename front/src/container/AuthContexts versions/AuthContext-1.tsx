@@ -7,7 +7,7 @@ import { createContext, useContext, Dispatch } from "react";
 //    dispatch функція, яка буде мати наступні типи дій:
 //            увійти в акаунт, вийти з акаунту
 
-export type AuthState = {
+type AuthState = {
   isLogged: boolean;
   token: string | null;
   email: string | null;
@@ -47,17 +47,13 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case "LOGIN":
-      const newState = {
+      return {
         ...state,
         isLogged: action.payload.isLogged,
         token: action.payload.token,
         email: action.payload.email,
       };
-      localStorage.setItem("authState", JSON.stringify(newState)); // Save to local storage
-      return newState;
-
     case "LOGOUT":
-      localStorage.removeItem("authState"); // Remove from local storage on logout
       return initialAuthState;
     default:
       return state;

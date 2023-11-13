@@ -2,19 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StatusBar from "../component/status-bar";
 
-//На цій сторінці ми створюємо верстку та розміщуємо дві
-//кнопки-посилання на сторінку /signup та сторінку /signin
+// На цій сторінці ми створюємо верстку та розміщуємо дві
+// кнопки-посилання на сторінку /signup та сторінку /signin
 const WelcomePage: React.FC = () => {
   return (
     <div className="welcome-page">
-      {/* <img
-        src="./svg/status-bar-white.svg"
-        alt="Status bare"
-        className="status-bar"
-      /> 
-      Зроблений в CSS
-      */}
-
       <div className="welcome">
         <StatusBar color="white" />
         <h1 className="welcome-title">Hello!</h1>

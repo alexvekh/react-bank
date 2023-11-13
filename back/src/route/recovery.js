@@ -32,15 +32,13 @@ router.post('/', (req, res) => {
     } else {
       console.log(user)
       user.code = Math.floor(1000 + Math.random() * 9000)
-      console.log('New user code', user.code)
-      console.log(user)
+      console.log('Recovery code', user.code)
       res.status(201).json({
         message: `The code for ${email} was sent`,
         // user: {
         //   isLogged: user.isLogged,
-        //   isConfirmed: user.isConfirmed,
-        //   email: user.email,
         //   token: user.token,
+        //   email: user.email,
         // },
       })
     }

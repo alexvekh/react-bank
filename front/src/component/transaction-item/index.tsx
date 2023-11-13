@@ -16,7 +16,6 @@ type TransactionProps = {
 
 const TransactionItem: React.FC<TransactionProps> = ({ transaction }) => {
   const { id, correspondent, timestamp, type, amount } = transaction;
-  console.log("timestamp", timestamp);
   const { dollars: amountDoll, cents: amountCents } =
     AmountSplitter.splitAmount(amount);
   const time: string = formatTimestamp(timestamp);
@@ -29,11 +28,6 @@ const TransactionItem: React.FC<TransactionProps> = ({ transaction }) => {
   } else {
     logo = "./svg/user.svg";
   }
-
-  // const date = new Date(timestamp);
-  // const hours = date.getHours().toString().padStart(2, "0");
-  // const minutes = date.getMinutes().toString().padStart(2, "0");
-  // const date2 = `${hours}:${minutes}`;
 
   return (
     <Link className="balance__transaction" to={`/transaction/${id}`}>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useReducer, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import StatusBar from "../component/status-bar/index";
 import ArrowBack from "../component/arrow-back/index";
@@ -7,7 +7,6 @@ import Page from "../component/page/index";
 import Title from "../component/title/index";
 import Input from "../component/input/index";
 import { useAuth } from "../container/AuthContext";
-import { setUserDataInLocalStorage } from "../component/Utils";
 
 // На цій сторінці вводимо код підтвердження реєстрації акаунта
 //та після успішного запиту переводимо на сторінку /balance
@@ -62,24 +61,13 @@ const SignupConfirmPage: React.FC = () => {
           const responseData = await response.json(); // Parse the JSON response
           console.log("Response OK responseData:", responseData);
           const user = responseData.user;
-          console.log("user:", user);
-          console.log("dispatch:", user);
+
           // Dispatch the "LOGIN" action to update the state
           dispatch({ type: "LOGIN", payload: user });
-
-          console.log("after dispatch:", user);
-          //dispatch({ type: "LOGIN", payload: user })
-
-          // LocalStorage
-          //setUserDataInLocalStorage(user);
-
-          if (state && state.isConfirmed) {
-            console.log(state);
-            navigate("/balance");
-          }
+          navigate("/balance");
         } else {
           // Handle registration errors
-          console.error("Registration failed");
+          console.error("Cod confirmation failed");
         }
       } catch (error) {
         console.error("An error occurred:", error);

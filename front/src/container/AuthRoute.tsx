@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 //AuthRoute це компонент, який перевіряє, чи є в контексті аутентифікації токен,

@@ -57,6 +57,8 @@ const SendPage: React.FC = () => {
       setAlert("Enter e valid email!");
     } else if (!isAmountValid) {
       setAlert("Enter a valid amount");
+    } else if (senderEmail === reciverEmail) {
+      setAlert("No sence to send money to same account");
     } else {
       try {
         const response = await fetch("http://localhost:4000/send", {

@@ -15,22 +15,23 @@ import NotificationsPage from "./page/NotificationsPage";
 import TransactionPage from "./page/TransactionPage";
 import SendPage from "./page/SendPage";
 import RecivePage from "./page/RecivePage";
+import Error from "./page/ErrorPage";
 import {
   AuthContext,
   authReducer,
+  AuthState,
   initialAuthState,
 } from "./container/AuthContext";
-//import { AuthProvider } from "./container/AuthProvider";
-
-const Error: React.FC = () => {
-  return <div className="App-header">Error Page</div>;
-};
 
 function App() {
-  const [state, dispatch] = useReducer(authReducer, initialAuthState);
+  const storedState = localStorage.getItem("authState");
+  const initialState: AuthState = storedState
+    ? JSON.parse(storedState)
+    : initialAuthState;
+
+  const [state, dispatch] = useReducer(authReducer, initialState);
   console.log("App: state, dispatch : ", state, dispatch);
 
-  console.log("App:state, dispatch entered: ", state, dispatch);
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>

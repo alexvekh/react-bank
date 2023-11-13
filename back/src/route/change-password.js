@@ -38,9 +38,8 @@ router.post('/', (req, res) => {
           message: 'Password was changed successfully',
           user: {
             isLogged: user.isLogged,
-            isConfirmed: user.isConfirmed,
-            email: user.email,
             token: user.token,
+            email: user.email,
           },
         })
       }

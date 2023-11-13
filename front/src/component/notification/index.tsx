@@ -1,6 +1,5 @@
 import "./index.css";
 import React from "react";
-import { Link } from "react-router-dom";
 import { formatTimeAgo } from "../Utils";
 
 type NotificationProps = {
@@ -11,9 +10,8 @@ type NotificationProps = {
   };
 };
 
-const Notification: React.FC<NotificationProps> = ({ notification }) => {
+const NotificationItem: React.FC<NotificationProps> = ({ notification }) => {
   const { message, type, time } = notification;
-  console.log("time", time);
 
   const timeAgo: string = formatTimeAgo(time);
 
@@ -25,12 +23,6 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
   } else {
     logo = "./svg/user.svg";
   }
-
-  //'Announcement' || 'Warning'
-  // const date = new Date(timestamp);
-  // const hours = date.getHours().toString().padStart(2, "0");
-  // const minutes = date.getMinutes().toString().padStart(2, "0");
-  // const date2 = `${hours}:${minutes}`;
 
   return (
     <div className="notification">
@@ -52,4 +44,4 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
   );
 };
 
-export default Notification;
+export default NotificationItem;
