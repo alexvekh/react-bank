@@ -81,15 +81,13 @@ const SignupPage: React.FC = () => {
         if (response.ok) {
           // Registration successful, you can navigate to the next page
           const responseData = await response.json(); // Parse the JSON response
+
           console.log("Response Data:", responseData);
 
-          const user = responseData.user;
-          console.log("user:", user);
-
-          dispatch({ type: "LOGIN", payload: user });
-
-          // LocalStorage
-          // setUserDataInLocalStorage(user);
+          // const user = responseData.user;
+          // console.log("user:", user);
+          // dispatch({ type: "LOGIN", payload: user });
+          // console.log("dispatch: ", user);
 
           navigate("/signup-confirm");
         } else {

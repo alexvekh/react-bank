@@ -7,38 +7,27 @@ import { createContext, useContext, Dispatch } from "react";
 //    dispatch функція, яка буде мати наступні типи дій:
 //            увійти в акаунт, вийти з акаунту
 
-export type AuthState = {
+type User = {
+  email: string;
+};
+
+type AuthState = {
   isLogged: boolean;
   token: string | null;
-  email: string | null;
+  user: User | null;
 };
 
 type AuthAction =
-  | {
-      type: "LOGIN";
-      payload: {
-        isLogged: boolean;
-        token: string;
-        email: string;
-      };
-    }
+  | { type: "LOGIN"; token: string; user: User }
   | { type: "LOGOUT" };
 
 export const initialAuthState: AuthState = {
   isLogged: false,
   token: null,
-  email: null,
+  user: null,
 };
 
-// ==============   Keepin login in For testsing private pages
-// export const initialAuthState: AuthState = {
-//   isLogged: true,
-//   isConfirmed: true,
-//   token: "Q&FdPDvByVne",
-//   email: "bob@mail.com",
-// };
-
-console.log("AuthContest.initialAuthState: ", initialAuthState);
+console.log("Context: initialAuthState: ", initialAuthState);
 
 // Редуктор для управління станом аутентифікації
 export const authReducer = (
@@ -47,24 +36,16 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case "LOGIN":
-      const newState = {
-        ...state,
-        isLogged: action.payload.isLogged,
-        token: action.payload.token,
-        email: action.payload.email,
-      };
-      localStorage.setItem("authState", JSON.stringify(newState)); // Save to local storage
-      return newState;
-
+      return { isLogged: true, token: action.token, user: action.user };
     case "LOGOUT":
-      localStorage.removeItem("authState"); // Remove from local storage on logout
       return initialAuthState;
     default:
       return state;
   }
 };
 
-console.log("AuthContest.authReducer", authReducer);
+console.log("Context: authReducer", authReducer);
+
 // =========================================
 // Створюємо контекст аутентифікації
 export const AuthContext = createContext<
@@ -74,6 +55,8 @@ export const AuthContext = createContext<
     }
   | undefined
 >(undefined);
+
+console.log("Context: AuthContext: ", AuthContext);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

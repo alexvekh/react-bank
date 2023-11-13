@@ -17,7 +17,7 @@ type Transaction = {
 };
 
 const BalancePage: React.FC = () => {
-  const { state } = useAuth();
+  const { state, dispatch } = useAuth();
   const userEmail = state.email;
   console.log(userEmail);
 
@@ -40,6 +40,7 @@ const BalancePage: React.FC = () => {
           if (response.ok) {
             return response.json(); // Parse the JSON response
           } else {
+            dispatch({ type: "LOGOUT" });
             throw new Error("Network response was not ok");
           }
         })

@@ -8,7 +8,6 @@ import Title from "../component/title/index";
 import Input from "../component/input/index";
 import InputPassword from "../component/input-password/index";
 import { useAuth } from "../container/AuthContext";
-import { setUserDataInLocalStorage } from "../component/Utils";
 
 //Вхід в акаунт. Зберігаємо дані аутентифікації в контекст. Якщо
 //user.confirm є false, то перенаправляємо на /signup-confirm
@@ -78,27 +77,18 @@ const SigninPage: React.FC = () => {
         if (response.status === 409) {
           // Handle the case where the email already exists
           const responseData = await response.json();
-          console.log(responseData.error);
-          console.error(responseData.error);
+
           setAlert(responseData.error);
         }
 
         if (response.ok) {
           // Registration successful, you can navigate to the next page
           const responseData = await response.json(); // Parse the JSON response
-          console.log("Response Data:", responseData);
 
           const user = responseData.user;
 
-          console.info("dispatch:", user);
-
           // Dispatch the "LOGIN" action to update the state
           dispatch({ type: "LOGIN", payload: user });
-
-          //dispatch({ type: "LOGIN", payload: user })
-
-          // LocalStorage
-          // setUserDataInLocalStorage(user);
 
           if (user.isConfirmed) {
             navigate("/balance");

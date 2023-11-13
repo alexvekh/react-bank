@@ -60,25 +60,6 @@ const RecoveryPage: React.FC = () => {
             // Code confirmed
             const responseData = await response.json(); // Parse the JSON response
             console.log("Response OK responseData:", responseData);
-            // const user = responseData.user;
-            // console.log("user:", user);
-
-            // Dispatch the "LOGIN" action to update the state
-
-            // dispatch({
-            //   type: "LOGIN",
-            //   payload: {
-            //     isLogged: false,
-            //     isConfirmed: false,
-            //     token: user.token,
-            //     email: user.email,
-            //   },
-            // });
-
-            console.log("after dispatch:", email);
-
-            // LocalStorage
-            //setUserDataInLocalStorage(user);
 
             navigate(`/recovery-confirm?email=${email}`);
           } else {

@@ -105,7 +105,7 @@ const SettingsPage: React.FC = () => {
     setOldPasswordIsValid(validatePassword(oldPassword));
     setNewPasswordIsValid(validatePassword(newPassword));
 
-    if (!oldPassword && !oldPassword) {
+    if (!oldPassword && !newPassword) {
       setAlertPasswordChange("Enter your old and new passwords!");
     } else if (!oldPassword) {
       setAlertPasswordChange("Enter your old password!");
@@ -115,6 +115,8 @@ const SettingsPage: React.FC = () => {
       setAlertPasswordChange("Old password is wrong!");
     } else if (!isNewPasswordValid) {
       setAlertPasswordChange("Minimum 8 symbols, 1 UpperCase, 1 special");
+    } else if (oldPassword === newPassword) {
+      setAlertPasswordChange("No sence to change password on same");
     } else {
       try {
         const response = await fetch("http://localhost:4000/change-password", {

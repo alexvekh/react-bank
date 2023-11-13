@@ -24,12 +24,11 @@ router.post('/', (req, res) => {
 
     if (!user) {
       // Check if a user with the same email already exists
-      console.log('user not exist')
+
       return res.status(409).json({
         error: "A user with this email isn't exists",
       })
     } else if (user.password !== password) {
-      console.log('wrong password')
       return res.status(409).json({
         error: 'Wrong password',
       })
@@ -39,17 +38,14 @@ router.post('/', (req, res) => {
       user.notifications.push(
         new Notification('New login', 'Warning'),
       )
-      console.log('user.isLogged', user)
-      //User.getUserByEmail(user.email).isLogged = true
-      //console.log(User.getUserByEmail(user.email))
 
       res.status(201).json({
         message: 'User is logged successfully',
         user: {
           isLogged: user.isLogged,
           isConfirmed: user.isConfirmed,
-          email: user.email,
           token: user.token,
+          email: user.email,
         },
       })
     }
